@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitchen Hub — Asian Dinner Recipes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #faf7f2;
+  --ink: #1a1108;
+  --ink2: #4a3f2f;
+  --ink3: #8a7a65;
+  --border: rgba(26,17,8,0.1);
+  --border2: rgba(26,17,8,0.18);
+  --accent: #c8440a;
+  --accent-light: #fdf0eb;
+  --gold: #b07d2a;
+  --gold-light: #fdf6e8;
+  --green: #2a6b3c;
+  --green-light: #edf7f1;
+  --surface: #ffffff;
+  --surface2: #f4f1ec;
+  --r: 10px;
+  --r-lg: 16px;
+  --shadow: 0 1px 3px rgba(26,17,8,0.08), 0 4px 16px rgba(26,17,8,0.06);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Header ── */
+header {
+  background: var(--ink);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+}
+
+.logo span { color: #e87a4a; font-style: italic; }
+
+.header-nav { display: flex; gap: 4px; }
+
+.hnav-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(250,247,242,0.6);
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.hnav-btn:hover { color: var(--cream); background: rgba(255,255,255,0.08); }
+.hnav-btn.active { color: var(--cream); background: rgba(255,255,255,0.12); }
+
+/* ── Hero ── */
+.hero {
+  background: var(--ink);
+  padding: 4rem 2rem 5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,68,10,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #e87a4a;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.hero h1 em { font-style: italic; color: #e87a4a; }
+
+.hero-sub {
+  font-size: 15px;
+  color: rgba(250,247,242,0.55);
+  max-width: 440px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-stat { text-align: center; }
+.hero-stat-n { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300; color: var(--cream); line-height: 1; }
+.hero-stat-l { font-size: 11px; color: rgba(250,247,242,0.4); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
+
+/* ── Layout ── */
+.page { display: none; }
+.page.active { display: block; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.filter-pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.filter-pill:hover { border-color: var(--ink2); color: var(--ink2); }
+.filter-pill.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+.ml { margin-left: auto; }
+.flex-gap { display: flex; gap: 8px; align-items: center; }
+
+.count-text { font-size: 13px; color: var(--ink3); }
+
+/* ── Primary button ── */
+.btn-primary {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: #a83808; }
+
+.btn-ghost {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover { background: var(--surface2); }
+
+/* ── Recipe Grid ── */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.recipe-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  animation: fadeUp 0.3s ease both;
+}
+
+.recipe-card:hover { box-shadow: var(--shadow); border-color: var(--border2); }
+.recipe-card.hidden { display: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.cuisine-badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: .03em;
+}
+
+.c-jp { background: #e8f5f0; color: #0a5c3e; }
+.c-cn { background: #fdeee8; color: #7a2010; }
+.c-th { background: #fdf4e0; color: #6b4400; }
+.c-tw { background: #eeecfe; color: #3a2890; }
+.c-vn { background: #edf5ee; color: #1a5c28; }
+.c-kr { background: #fdeef2; color: #7a1030; }
+.c-other { background: var(--surface2); color: var(--ink3); }
+
+.card-desc { font-size: 13px; color: var(--ink2); line-height: 1.55; flex: 1; }
+
+.card-meta { display: flex; gap: 14px; }
+.meta-chip { font-size: 11px; color: var(--ink3); display: flex; align-items: center; gap: 4px; }
+
+.card-footer { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+.diff-badge { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+.d-easy { background: #edf5ee; color: #1a5c28; }
+.d-med  { background: #fdf4e0; color: #6b4400; }
+.d-hard { background: #fdeee8; color: #7a2010; }
+
+.card-actions { display: flex; gap: 6px; margin-left: auto; }
+
+.action-btn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.action-btn:hover { background: var(--surface2); color: var(--ink); }
+.action-btn.del:hover { background: #fdeee8; color: var(--accent); border-color: #e8b4a0; }
+.action-btn.get-recipe { color: var(--accent); border-color: #e8b4a0; }
+.action-btn.get-recipe:hover { background: var(--accent-light); }
+
+/* submitted-by */
+.submitted-by { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+
+/* ── Section heading ── */
+.section-heading {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: .3rem;
+  letter-spacing: -0.02em;
+}
+.section-sub { font-size: 13px; color: var(--ink3); margin-bottom: 1.5rem; }
+
+/* ── Pantry ── */
+.pantry-top { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+
+.stat-chip {
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--ink3);
+  background: var(--surface);
+}
+
+.pantry-section { margin-bottom: 1.5rem; }
+.pantry-sec-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: .5rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pantry-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pantry-row:last-child { border-bottom: none; }
+
+.pantry-name { font-size: 14px; color: var(--ink); }
+.pantry-note { font-size: 11px; color: var(--ink3); margin-top: 1px; }
+.pantry-uses { font-size: 11px; color: var(--ink3); white-space: nowrap; }
+
+.status-btn {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  min-width: 72px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.15s;
+}
+.status-btn:hover { opacity: .8; }
+.s-stocked { background: #edf5ee; color: #1a5c28; }
+.s-low     { background: #fdf4e0; color: #6b4400; }
+.s-out     { background: #fdeee8; color: #7a2010; }
+
+.del-pantry {
+  font-size: 14px;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.del-pantry:hover { background: #fdeee8; color: var(--accent); border-color: #e8b4a0; }
+
+.shoplist-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.1rem 1.25rem;
+  margin-top: 1.5rem;
+  display: none;
+}
+.shoplist-box.visible { display: block; animation: fadeUp .25s ease both; }
+.shoplist-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; margin-bottom: .75rem; color: var(--ink); }
+.shop-row { font-size: 13px; color: var(--ink2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.shop-row:last-child { border-bottom: none; }
+.sbadge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+.sb-low { background: #fdf4e0; color: #6b4400; }
+.sb-out { background: #fdeee8; color: #7a2010; }
+
+/* ── Modal ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,17,8,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeUp .2s ease both;
+}
+
+.modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+
+.field { margin-bottom: 14px; }
+.field label { font-size: 12px; color: var(--ink3); display: block; margin-bottom: 5px; font-weight: 500; letter-spacing: .02em; }
+.field input, .field textarea, .field select {
+  width: 100%;
+  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+.field textarea { min-height: 72px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  z-index: 300;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all .25s ease;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── No results ── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ink3);
+  font-size: 14px;
+}
+.empty-state .big { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--ink2); margin-bottom: .5rem; font-weight: 300; }
+
+/* ── About page ── */
+.about-wrap { max-width: 680px; margin: 0 auto; }
+.about-wrap h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); margin: 1.75rem 0 .6rem; letter-spacing: -0.02em; }
+.about-wrap p { color: var(--ink2); font-size: 14px; line-height: 1.75; margin-bottom: .6rem; }
+.about-wrap ul { color: var(--ink2); font-size: 14px; line-height: 1.75; padding-left: 1.25rem; margin-bottom: .6rem; }
+.about-wrap li { margin-bottom: .25rem; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  header { padding: 0 1rem; }
+  .hero { padding: 2.5rem 1rem 3.5rem; }
+  .container { padding: 1.5rem 1rem; }
+  .hero-stats { gap: 1.25rem; }
+  .pantry-row { grid-template-columns: 1fr auto auto; }
+  .pantry-uses { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Kitchen<span>Hub</span></div>
+  <div class="header-nav">
+    <button class="hnav-btn active" onclick="showPage('home', this)">Recipes</button>
+    <button class="hnav-btn" onclick="showPage('pantry', this)">Pantry</button>
+    <button class="hnav-btn" onclick="showPage('about', this)">About</button>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <p class="hero-eyebrow">Singapore-based · Asian home cooking</p>
+    <h1>Your family's<br><em>house recipes,</em><br>all in one place</h1>
+    <p class="hero-sub">A curated collection of weeknight dinners spanning Japanese, Chinese, Thai, Taiwanese and Vietnamese cuisine.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-n" id="stat-total">—</div><div class="hero-stat-l">Recipes</div></div>
+      <div class="hero-stat"><div class="hero-stat-n" id="stat-quick">—</div><div class="hero-stat-l">Under 30 min</div></div>
+      <div class="hero-stat"><div class="hero-stat-n" id="stat-easy">—</div><div class="hero-stat-l">Easy dishes</div></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="toolbar">
+      <button class="filter-pill active" onclick="filterBy('all', this)">All</button>
+      <button class="filter-pill" onclick="filterBy('jp', this)">Japanese</button>
+      <button class="filter-pill" onclick="filterBy('cn', this)">Chinese</button>
+      <button class="filter-pill" onclick="filterBy('th', this)">Thai</button>
+      <button class="filter-pill" onclick="filterBy('tw', this)">Taiwanese</button>
+      <button class="filter-pill" onclick="filterBy('vn', this)">Vietnamese</button>
+      <button class="filter-pill" onclick="filterBy('quick', this)">Under 30 min</button>
+      <div class="flex-gap ml">
+        <span class="count-text" id="recipe-count"></span>
+        <button class="btn-primary" onclick="openAddRecipe()">+ Add recipe</button>
+      </div>
+    </div>
+    <div class="recipe-grid" id="recipe-grid"></div>
+    <div class="empty-state" id="empty-state" style="display:none">
+      <div class="big">No recipes found</div>
+      Try a different filter, or add a new dish.
+    </div>
+  </div>
+</div>
+
+<!-- PANTRY PAGE -->
+<div id="page-pantry" class="page">
+  <div class="container">
+    <h2 class="section-heading">Pantry tracker</h2>
+    <p class="section-sub">Keep your staples topped up. Click any status badge to cycle through Stocked → Low → Out.</p>
+
+    <div class="pantry-top">
+      <span class="stat-chip" id="pt-stocked">— stocked</span>
+      <span class="stat-chip" id="pt-low">— low</span>
+      <span class="stat-chip" id="pt-out">— out</span>
+      <div class="flex-gap ml">
+        <button class="btn-ghost" onclick="toggleShopList()">Top-up list</button>
+        <button class="btn-primary" onclick="openAddPantry()">+ Add item</button>
+      </div>
+    </div>
+
+    <div id="pantry-body"></div>
+    <div class="shoplist-box" id="shoplist">
+      <p class="shoplist-title">Top-up shopping list</p>
+      <div id="shoplist-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <div class="container">
+    <div class="about-wrap">
+      <h2 class="section-heading" style="margin-top:0">About Kitchen Hub</h2>
+      <p>Kitchen Hub is a living recipe collection and pantry tracker built for Asian home cooks. It was designed for a couple in Singapore — one who loves Japanese cuisine, one who loves Chinese, Thai and Taiwanese — and grew into a shareable tool for anyone who cooks this way.</p>
+      <hr class="divider">
+      <h2>How to use it</h2>
+      <ul>
+        <li><strong>Recipes tab</strong> — browse, filter by cuisine or cook time, add your own dishes, and get the full recipe from Claude AI.</li>
+        <li><strong>Pantry tab</strong> — track your staple ingredients. Tap a status badge to mark items as Low or Out. Hit "Top-up list" to see your shopping list at a glance.</li>
+        <li><strong>Add anything</strong> — the collection is open. Add your family's recipes and they'll appear for everyone.</li>
+      </ul>
+      <hr class="divider">
+      <h2>The cuisines</h2>
+      <p>The current collection spans <strong>Japanese</strong> (donburi, ramen, gyudon), <strong>Cantonese Chinese</strong> (steamed fish, clay pot rice), <strong>Thai</strong> (green curry, pad kra pao), <strong>Taiwanese</strong> (lu rou fan, beef noodles) and <strong>Vietnamese</strong> (lemongrass prawn vermicelli).</p>
+      <hr class="divider">
+      <h2>Tips for Singapore cooks</h2>
+      <ul>
+        <li>Wet market (Compass One or Sengkang) for fresh proteins and veg — Saturday mornings are best.</li>
+        <li>FairPrice / Cold Storage for pantry replenishment and Japanese/Thai specialty items.</li>
+        <li>Redmart for heavy dry goods on a recurring schedule (rice, soy sauce, coconut milk).</li>
+        <li>A 90-minute Sunday batch prep session — pre-cooked rice, marinated eggs, julienned ginger — makes weeknight cooking feel instant.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe Modal -->
+<div class="modal-backdrop" id="recipe-modal">
+  <div class="modal">
+    <p class="modal-title" id="recipe-modal-title">Add a recipe</p>
+    <div class="field"><label>Dish name *</label><input id="f-name" placeholder="e.g. Miso ramen with chashu pork"></div>
+    <div class="field"><label>Short description</label><textarea id="f-desc" placeholder="A sentence or two about the dish..."></textarea></div>
+    <div class="field-row">
+      <div class="field"><label>Cuisine</label>
+        <select id="f-cuisine">
+          <option value="jp">Japanese</option>
+          <option value="cn">Chinese</option>
+          <option value="th">Thai</option>
+          <option value="tw">Taiwanese</option>
+          <option value="vn">Vietnamese</option>
+          <option value="kr">Korean</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Cook time (min)</label><input id="f-time" type="number" min="5" max="300" placeholder="30"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Difficulty</label>
+        <select id="f-diff">
+          <option value="easy">Easy</option>
+          <option value="med">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="field"><label>Servings</label><input id="f-serves" placeholder="e.g. 2"></div>
+    </div>
+    <div class="field"><label>Your name (optional)</label><input id="f-author" placeholder="e.g. Jian"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeRecipeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveRecipe()">Save recipe</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pantry Modal -->
+<div class="modal-backdrop" id="pantry-modal">
+  <div class="modal">
+    <p class="modal-title" id="pantry-modal-title">Add pantry item</p>
+    <div class="field"><label>Item name *</label><input id="p-name" placeholder="e.g. Fish sauce"></div>
+    <div class="field"><label>Brand / note</label><input id="p-note" placeholder="e.g. Tiparos or Megachef"></div>
+    <div class="field-row">
+      <div class="field"><label>Category</label>
+        <select id="p-cat">
+          <option value="Sauces &amp; liquid seasonings">Sauces &amp; liquid</option>
+          <option value="Dry spices &amp; aromatics">Dry spices</option>
+          <option value="Pastes, stocks &amp; tins">Pastes &amp; tins</option>
+          <option value="Grains &amp; noodles">Grains &amp; noodles</option>
+          <option value="Fridge &amp; freezer staples">Fridge &amp; freezer</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Used in</label><input id="p-uses" placeholder="e.g. N3,6,9"></div>
+    </div>
+    <div class="field"><label>Stock status</label>
+      <select id="p-status">
+        <option value="stocked">Stocked</option>
+        <option value="low">Low</option>
+        <option value="out">Out</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closePantryModal()">Cancel</button>
+      <button class="btn-primary" onclick="savePantryItem()">Save item</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────
+var RECIPE_KEY = 'kitchenhub-recipes-v2';
+var PANTRY_KEY = 'kitchenhub-pantry-v2';
+
+var DEFAULT_RECIPES = [
+  {id:'r1',name:'Salmon teriyaki donburi',desc:'Pan-seared salmon with a glossy teriyaki glaze, pickled cucumber, edamame and a soft-boiled egg over steamed Japanese rice.',cuisine:'jp',time:25,diff:'easy',serves:'2',author:'Kitchen Hub'},
+  {id:'r2',name:'Lu rou fan (braised pork rice)',desc:'Melt-in-the-mouth pork belly braised in soy, rice wine and five spice, served over rice with a jammy braised egg and pickled mustard greens.',cuisine:'tw',time:75,diff:'med',serves:'2–3',author:'Kitchen Hub'},
+  {id:'r3',name:'Thai green curry with chicken',desc:'Fragrant coconut milk curry with chicken thighs, Thai eggplant and kaffir lime leaves, served alongside Thai basil jasmine rice.',cuisine:'th',time:35,diff:'easy',serves:'2',author:'Kitchen Hub'},
+  {id:'r4',name:'Cantonese steamed fish',desc:'Whole sea bass or batang steamed simply with ginger, finished with a dramatic hot oil pour, light soy, julienned scallion and coriander.',cuisine:'cn',time:20,diff:'easy',serves:'2',author:'Kitchen Hub'},
+  {id:'r5',name:'Miso ramen with chashu pork',desc:'Rich miso broth with slow-braised chashu pork belly, ramen noodles, a soft egg, bamboo shoots and nori.',cuisine:'jp',time:60,diff:'med',serves:'2',author:'Kitchen Hub'},
+  {id:'r6',name:'Pad kra pao (Thai basil pork)',desc:'Minced pork stir-fried with Thai holy basil, chilli and garlic, served over jasmine rice with a crispy fried egg.',cuisine:'th',time:20,diff:'easy',serves:'2',author:'Kitchen Hub'},
+  {id:'r7',name:'Taiwanese beef noodle soup',desc:'Braised beef shank in a deep, spiced soy broth served over wide noodles with bean sprouts and chilli oil.',cuisine:'tw',time:90,diff:'med',serves:'2–3',author:'Kitchen Hub'},
+  {id:'r8',name:'Cantonese clay pot chicken rice',desc:'Chicken thighs, lap cheong and shiitake mushrooms slow-cooked over jasmine rice in a clay pot with dark soy and ginger.',cuisine:'cn',time:50,diff:'med',serves:'2',author:'Kitchen Hub'},
+  {id:'r9',name:'Vietnamese lemongrass prawn vermicelli',desc:'Lemongrass-marinated prawns over rice vermicelli with fresh herbs, bean sprouts and a zingy nuoc cham dipping sauce.',cuisine:'vn',time:30,diff:'easy',serves:'2',author:'Kitchen Hub'},
+  {id:'r10',name:'Gyudon (Japanese beef rice bowl)',desc:'Thinly sliced beef and onion simmered in dashi, mirin and soy, served over steamed rice with a soft egg.',cuisine:'jp',time:25,diff:'easy',serves:'2',author:'Kitchen Hub'}
+];
+
+var DEFAULT_PANTRY = [
+  {id:'p1',name:'Light soy sauce',note:'Kikkoman or Pearl River Bridge',cat:'Sauces & liquid seasonings',uses:'N1,4–8,10',status:'stocked'},
+  {id:'p2',name:'Dark soy sauce',note:'For colour & depth in braises',cat:'Sauces & liquid seasonings',uses:'N2,8',status:'stocked'},
+  {id:'p3',name:'Mirin',note:'Kikkoman or Takara',cat:'Sauces & liquid seasonings',uses:'N1,5,10',status:'stocked'},
+  {id:'p4',name:'Sake / dry sherry',note:'Or Shaoxing as substitute',cat:'Sauces & liquid seasonings',uses:'N1,4,5,10',status:'stocked'},
+  {id:'p5',name:'Shaoxing rice wine',note:'Essential for Chinese braises',cat:'Sauces & liquid seasonings',uses:'N2,4,7,8',status:'stocked'},
+  {id:'p6',name:'Rice vinegar',note:'Marukan or Mizkan',cat:'Sauces & liquid seasonings',uses:'N1,5',status:'stocked'},
+  {id:'p7',name:'Fish sauce',note:'Tiparos or Megachef',cat:'Sauces & liquid seasonings',uses:'N3,6,9',status:'stocked'},
+  {id:'p8',name:'Oyster sauce',note:'Lee Kum Kee premium',cat:'Sauces & liquid seasonings',uses:'N4,8',status:'stocked'},
+  {id:'p9',name:'Sesame oil',note:'Kadoya — finisher only',cat:'Sauces & liquid seasonings',uses:'N1,4,5,8',status:'stocked'},
+  {id:'p10',name:'Neutral oil',note:'Sunflower or vegetable',cat:'Sauces & liquid seasonings',uses:'All',status:'stocked'},
+  {id:'p11',name:'Five spice powder',note:'',cat:'Dry spices & aromatics',uses:'N2',status:'stocked'},
+  {id:'p12',name:'Star anise',note:'',cat:'Dry spices & aromatics',uses:'N2,7',status:'stocked'},
+  {id:'p13',name:'White pepper',note:'',cat:'Dry spices & aromatics',uses:'N4,8',status:'stocked'},
+  {id:'p14',name:'Toasted sesame seeds',note:'',cat:'Dry spices & aromatics',uses:'N1,10',status:'stocked'},
+  {id:'p15',name:'Chilli oil / doubanjiang',note:'',cat:'Dry spices & aromatics',uses:'N7',status:'stocked'},
+  {id:'p16',name:'Sugar (white)',note:'',cat:'Dry spices & aromatics',uses:'All',status:'stocked'},
+  {id:'p17',name:'Salt',note:'',cat:'Dry spices & aromatics',uses:'All',status:'stocked'},
+  {id:'p18',name:'White miso paste',note:'Keep refrigerated',cat:'Pastes, stocks & tins',uses:'N5',status:'stocked'},
+  {id:'p19',name:'Green curry paste',note:'Mae Ploy or Maesri',cat:'Pastes, stocks & tins',uses:'N3',status:'stocked'},
+  {id:'p20',name:'Dashi stock powder',note:'Hondashi or Kayanoya',cat:'Pastes, stocks & tins',uses:'N5,10',status:'stocked'},
+  {id:'p21',name:'Coconut milk (cans)',note:'Keep 2 cans minimum',cat:'Pastes, stocks & tins',uses:'N3',status:'stocked'},
+  {id:'p22',name:'Japanese short-grain rice',note:'Koshihikari — 2kg bag',cat:'Grains & noodles',uses:'N1,2,6,10',status:'stocked'},
+  {id:'p23',name:'Thai jasmine rice',note:'1kg bag',cat:'Grains & noodles',uses:'N3,4,8',status:'stocked'},
+  {id:'p24',name:'Dried ramen noodles',note:'',cat:'Grains & noodles',uses:'N5',status:'stocked'},
+  {id:'p25',name:'Rice vermicelli (bee hoon)',note:'',cat:'Grains & noodles',uses:'N9',status:'stocked'},
+  {id:'p26',name:'Dried shiitake mushrooms',note:'',cat:'Grains & noodles',uses:'N2,8',status:'stocked'},
+  {id:'p27',name:'Eggs',note:'Keep at least 6',cat:'Fridge & freezer staples',uses:'All',status:'stocked'},
+  {id:'p28',name:'Frozen edamame (shelled)',note:'',cat:'Fridge & freezer staples',uses:'N1',status:'stocked'},
+  {id:'p29',name:'Pickled mustard greens',note:'',cat:'Fridge & freezer staples',uses:'N2',status:'stocked'}
+];
+
+var CUISINE_LABEL = {jp:'Japanese',cn:'Chinese',th:'Thai',tw:'Taiwanese',vn:'Vietnamese',kr:'Korean',other:'Other'};
+var CUISINE_CLASS = {jp:'c-jp',cn:'c-cn',th:'c-th',tw:'c-tw',vn:'c-vn',kr:'c-kr',other:'c-other'};
+var DIFF_LABEL = {easy:'Easy',med:'Medium',hard:'Hard'};
+var DIFF_CLASS = {easy:'d-easy',med:'d-med',hard:'d-hard'};
+var STATUS_CYCLE = ['stocked','low','out'];
+var STATUS_LABEL = {stocked:'Stocked',low:'Low',out:'Out'};
+var STATUS_CLASS = {stocked:'s-stocked',low:'s-low',out:'s-out'};
+var CAT_ORDER = ['Sauces & liquid seasonings','Dry spices & aromatics','Pastes, stocks & tins','Grains & noodles','Fridge & freezer staples','Other'];
+
+var editRecipeId = null;
+var editPantryId = null;
+var currentFilter = 'all';
+var shopVisible = false;
+
+// ── Storage ──────────────────────────────────────────────────────
+function lsGet(key, def) {
+  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
+  catch(e) { return def; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+function getRecipes() { return lsGet(RECIPE_KEY, DEFAULT_RECIPES); }
+function getPantry()  { return lsGet(PANTRY_KEY, DEFAULT_PANTRY); }
+function setRecipes(d) { lsSet(RECIPE_KEY, d); }
+function setPantry(d)  { lsSet(PANTRY_KEY, d); }
+
+// ── Navigation ───────────────────────────────────────────────────
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.hnav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('page-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='pantry') renderPantry();
+  if(name==='home') renderRecipes();
+}
+
+// ── Recipes ──────────────────────────────────────────────────────
+function renderRecipes() {
+  var recipes = getRecipes();
+  updateHeroStats(recipes);
+  var grid = document.getElementById('recipe-grid');
+  if(!recipes.length) {
+    grid.innerHTML = '';
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('recipe-count').textContent = '0 recipes';
+    return;
+  }
+  grid.innerHTML = recipes.map(function(r, i) {
+    return '<div class="recipe-card" data-id="'+r.id+'" data-cuisine="'+r.cuisine+'" data-time="'+r.time+'" data-diff="'+r.diff+'" style="animation-delay:'+Math.min(i*0.04,0.4)+'s">'
+      +'<div class="card-top">'
+      +'<div class="card-title">'+esc(r.name)+'</div>'
+      +'<span class="cuisine-badge '+CUISINE_CLASS[r.cuisine]+'">'+CUISINE_LABEL[r.cuisine]+'</span>'
+      +'</div>'
+      +(r.desc ? '<p class="card-desc">'+esc(r.desc)+'</p>' : '')
+      +'<div class="card-meta">'
+      +'<span class="meta-chip">'+r.time+' min</span>'
+      +'<span class="meta-chip">'+esc(r.serves||'2')+' servings</span>'
+      +'</div>'
+      +'<div class="card-footer">'
+      +'<span class="diff-badge '+DIFF_CLASS[r.diff]+'">'+DIFF_LABEL[r.diff]+'</span>'
+      +'<div class="card-actions">'
+      +'<button class="action-btn" onclick="editRecipeFn(\''+r.id+'\')">Edit</button>'
+      +'<button class="action-btn del" onclick="deleteRecipeFn(\''+r.id+'\')">Delete</button>'
+      +'<button class="action-btn get-recipe" onclick="askRecipe(\''+esc(r.name)+'\')">Full recipe ↗</button>'
+      +'</div></div>'
+      +(r.author ? '<div class="submitted-by">Added by '+esc(r.author)+'</div>' : '')
+      +'</div>';
+  }).join('');
+  applyFilter(currentFilter);
+}
+
+function askRecipe(name) {
+  window.open('https://claude.ai/new?q='+encodeURIComponent('Give me the full step-by-step recipe for '+name), '_blank');
+}
+
+function updateHeroStats(recipes) {
+  document.getElementById('stat-total').textContent = recipes.length;
+  document.getElementById('stat-quick').textContent = recipes.filter(function(r){ return r.time<=30; }).length;
+  document.getElementById('stat-easy').textContent = recipes.filter(function(r){ return r.diff==='easy'; }).length;
+}
+
+function filterBy(type, btn) {
+  document.querySelectorAll('.filter-pill').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilter(type);
+}
+
+function applyFilter(type) {
+  currentFilter = type;
+  var cards = document.querySelectorAll('.recipe-card');
+  var visible = 0;
+  cards.forEach(function(c){
+    var show = type==='all'
+      || (type==='quick' && parseInt(c.dataset.time)<=30)
+      || c.dataset.cuisine===type;
+    c.classList.toggle('hidden', !show);
+    if(show) visible++;
+  });
+  document.getElementById('recipe-count').textContent = visible+(visible===1?' recipe':' recipes');
+  document.getElementById('empty-state').style.display = visible===0 && document.querySelectorAll('.recipe-card').length>0 ? 'block' : 'none';
+}
+
+function openAddRecipe() {
+  editRecipeId = null;
+  document.getElementById('recipe-modal-title').textContent = 'Add a recipe';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-desc').value='';
+  document.getElementById('f-cuisine').value='jp';
+  document.getElementById('f-time').value='';
+  document.getElementById('f-diff').value='easy';
+  document.getElementById('f-serves').value='2';
+  document.getElementById('f-author').value='';
+  document.getElementById('recipe-modal').classList.add('open');
+  setTimeout(function(){ document.getElementById('f-name').focus(); }, 100);
+}
+
+function editRecipeFn(id) {
+  var r = getRecipes().find(function(x){ return x.id===id; });
+  if(!r) return;
+  editRecipeId = id;
+  document.getElementById('recipe-modal-title').textContent = 'Edit recipe';
+  document.getElementById('f-name').value = r.name;
+  document.getElementById('f-desc').value = r.desc||'';
+  document.getElementById('f-cuisine').value = r.cuisine;
+  document.getElementById('f-time').value = r.time;
+  document.getElementById('f-diff').value = r.diff;
+  document.getElementById('f-serves').value = r.serves||'2';
+  document.getElementById('f-author').value = r.author||'';
+  document.getElementById('recipe-modal').classList.add('open');
+}
+
+function closeRecipeModal() { document.getElementById('recipe-modal').classList.remove('open'); }
+
+function saveRecipe() {
+  var name = document.getElementById('f-name').value.trim();
+  if(!name) { document.getElementById('f-name').focus(); return; }
+  var recipes = getRecipes();
+  var item = {
+    id: editRecipeId || uid(),
+    name: name,
+    desc: document.getElementById('f-desc').value.trim(),
+    cuisine: document.getElementById('f-cuisine').value,
+    time: parseInt(document.getElementById('f-time').value)||30,
+    diff: document.getElementById('f-diff').value,
+    serves: document.getElementById('f-serves').value.trim()||'2',
+    author: document.getElementById('f-author').value.trim()||'Anonymous'
+  };
+  if(editRecipeId) {
+    var idx = recipes.findIndex(function(r){ return r.id===editRecipeId; });
+    if(idx>-1) recipes[idx]=item; else recipes.push(item);
+  } else { recipes.push(item); }
+  setRecipes(recipes);
+  renderRecipes();
+  closeRecipeModal();
+  showToast(editRecipeId ? 'Recipe updated' : 'Recipe added!');
+}
+
+function deleteRecipeFn(id) {
+  if(!confirm('Delete this recipe?')) return;
+  var recipes = getRecipes().filter(function(r){ return r.id!==id; });
+  setRecipes(recipes);
+  renderRecipes();
+  showToast('Recipe deleted');
+}
+
+// ── Pantry ───────────────────────────────────────────────────────
+function renderPantry() {
+  var pantry = getPantry();
+  var grouped = {};
+  pantry.forEach(function(p){
+    var cat = CAT_ORDER.indexOf(p.cat)>-1 ? p.cat : 'Other';
+    if(!grouped[cat]) grouped[cat]=[];
+    grouped[cat].push(p);
+  });
+  var html = '';
+  var allCats = CAT_ORDER.filter(function(c){ return grouped[c]&&grouped[c].length; });
+  allCats.forEach(function(cat){
+    html += '<div class="pantry-section"><p class="pantry-sec-label">'+esc(cat)+'</p>';
+    grouped[cat].forEach(function(p){
+      html += '<div class="pantry-row" data-id="'+p.id+'">'
+        +'<div><div class="pantry-name">'+esc(p.name)+'</div>'+(p.note?'<div class="pantry-note">'+esc(p.note)+'</div>':'')+'</div>'
+        +'<span class="pantry-uses">'+esc(p.uses||'')+'</span>'
+        +'<button class="status-btn '+STATUS_CLASS[p.status]+'" onclick="cycleStatus(this,\''+p.id+'\')">'+STATUS_LABEL[p.status]+'</button>'
+        +'<button class="del-pantry" title="Remove" onclick="deletePantryFn(\''+p.id+'\')">×</button>'
+        +'</div>';
+    });
+    html += '</div>';
+  });
+  if(!html) html='<div class="empty-state"><div class="big">Nothing here yet</div>Add your first pantry item.</div>';
+  document.getElementById('pantry-body').innerHTML = html;
+  updatePantryStats(pantry);
+  if(shopVisible) buildShopList(pantry);
+}
+
+function updatePantryStats(pantry) {
+  var c={stocked:0,low:0,out:0};
+  pantry.forEach(function(p){ c[p.status]++; });
+  document.getElementById('pt-stocked').textContent = c.stocked+' stocked';
+  document.getElementById('pt-low').textContent = c.low+' low';
+  document.getElementById('pt-out').textContent = c.out+' out';
+}
+
+function cycleStatus(btn, id) {
+  var cur = STATUS_CYCLE.indexOf(btn.className.replace('status-btn ','').replace('s-',''));
+  var next = STATUS_CYCLE[(cur+1)%3];
+  btn.textContent = STATUS_LABEL[next];
+  btn.className = 'status-btn '+STATUS_CLASS[next];
+  var pantry = getPantry();
+  var item = pantry.find(function(p){ return p.id===id; });
+  if(item) item.status = next;
+  setPantry(pantry);
+  updatePantryStats(pantry);
+  if(shopVisible) buildShopList(pantry);
+}
+
+function toggleShopList() {
+  shopVisible = !shopVisible;
+  var box = document.getElementById('shoplist');
+  box.classList.toggle('visible', shopVisible);
+  if(shopVisible) buildShopList(getPantry());
+}
+
+function buildShopList(pantry) {
+  var items = pantry.filter(function(p){ return p.status!=='stocked'; });
+  var el = document.getElementById('shoplist-items');
+  if(!items.length) { el.innerHTML='<p style="font-size:13px;color:var(--ink3);font-style:italic">All stocked — nothing to top up!</p>'; return; }
+  el.innerHTML = items.map(function(p){
+    var badge = p.status==='out'
+      ? '<span class="sbadge sb-out">Out</span>'
+      : '<span class="sbadge sb-low">Low</span>';
+    return '<div class="shop-row">'+badge+' '+esc(p.name)+(p.note?'<span style="font-size:11px;color:var(--ink3)">'+esc(p.note)+'</span>':'')+'</div>';
+  }).join('');
+}
+
+function openAddPantry() {
+  editPantryId = null;
+  document.getElementById('pantry-modal-title').textContent = 'Add pantry item';
+  document.getElementById('p-name').value='';
+  document.getElementById('p-note').value='';
+  document.getElementById('p-cat').value='Sauces & liquid seasonings';
+  document.getElementById('p-uses').value='';
+  document.getElementById('p-status').value='stocked';
+  document.getElementById('pantry-modal').classList.add('open');
+  setTimeout(function(){ document.getElementById('p-name').focus(); }, 100);
+}
+
+function closePantryModal() { document.getElementById('pantry-modal').classList.remove('open'); }
+
+function savePantryItem() {
+  var name = document.getElementById('p-name').value.trim();
+  if(!name) { document.getElementById('p-name').focus(); return; }
+  var pantry = getPantry();
+  var item = {
+    id: editPantryId || uid(),
+    name: name,
+    note: document.getElementById('p-note').value.trim(),
+    cat: document.getElementById('p-cat').value,
+    uses: document.getElementById('p-uses').value.trim(),
+    status: document.getElementById('p-status').value
+  };
+  if(editPantryId) {
+    var idx = pantry.findIndex(function(p){ return p.id===editPantryId; });
+    if(idx>-1) pantry[idx]=item; else pantry.push(item);
+  } else { pantry.push(item); }
+  setPantry(pantry);
+  renderPantry();
+  closePantryModal();
+  showToast('Pantry updated');
+}
+
+function deletePantryFn(id) {
+  setPantry(getPantry().filter(function(p){ return p.id!==id; }));
+  renderPantry();
+  showToast('Item removed');
+}
+
+// ── Helpers ──────────────────────────────────────────────────────
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// Close modals on backdrop click
+document.querySelectorAll('.modal-backdrop').forEach(function(bd){
+  bd.addEventListener('click', function(e){
+    if(e.target===bd) {
+      bd.classList.remove('open');
+    }
+  });
+});
+
+// Close modals on Escape
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(function(m){ m.classList.remove('open'); });
+  }
+});
+
+// ── Init ─────────────────────────────────────────────────────────
+renderRecipes();
+</script>
+</body>
+</html>
