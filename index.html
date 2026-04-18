@@ -445,7 +445,7 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
 <script>
 var SUPABASE_URL = 'https://wlcmhndnhhhvsulsxmkc.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsY21obmRuaGhodnN1bHN4bWtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MDE2OTIsImV4cCI6MjA5MjA3NzY5Mn0.x1IoKQmtewVmnSUvwJERXX3eMAEMPz84F3DKhqTXyf0';
-var ANTHROPIC_KEY = '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';
+var WORKER_URL = 'https://kkb-import.YOUR-SUBDOMAIN.workers.dev';
 var ADMIN_SECRET = 'kkbsecret';
 var isAdmin = (new URLSearchParams(window.location.search)).get('admin') === ADMIN_SECRET;
 
@@ -657,63 +657,22 @@ async function importFromUrl() {
   var timer = setTimeout(function(){ controller.abort(); }, 90000);
 
   try {
-    var prompt = 'Please fetch and read this recipe page: ' + url + '\n\n'
-      + 'Extract the recipe and return ONLY a JSON object with these exact fields (no markdown, no backticks, just raw JSON):\n'
-      + '{\n'
-      + '  "name": "full dish name",\n'
-      + '  "desc": "one or two sentence description",\n'
-      + '  "cuisine": "jp|cn|th|tw|vn|kr|other",\n'
-      + '  "time": 30,\n'
-      + '  "serves": "2",\n'
-      + '  "author": "author name from the site",\n'
-      + '  "ingredients": "ingredient 1\\ningredient 2\\ningredient 3",\n'
-      + '  "steps": "1. Step one\\n\\n2. Step two\\n\\n3. Step three"\n'
-      + '}\n\n'
-      + 'cuisine codes: jp=Japanese, cn=Chinese/Cantonese, th=Thai, tw=Taiwanese, vn=Vietnamese, kr=Korean, other=anything else.\n'
-      + 'time: integer minutes only. ingredients: one per line, no bullets. steps: numbered, blank line between each.\n'
-      + 'Return ONLY the JSON object, nothing else at all.';
-
-    var response = await fetch('https://api.anthropic.com/v1/messages', {
+    var response = await fetch(WORKER_URL, {
       method: 'POST',
       signal: controller.signal,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url })
     });
 
     clearTimeout(timer);
 
-    if (!response.ok) {
-      var errText = await response.text();
-      var errJson; try { errJson = JSON.parse(errText); } catch(_) {}
-      var errMsg = (errJson && errJson.error && errJson.error.message) || errText.substring(0, 300);
-      throw new Error('API ' + response.status + ': ' + errMsg);
-    }
-
     var data = await response.json();
 
-    var fullText = (data.content || [])
-      .filter(function(b){ return b.type === 'text'; })
-      .map(function(b){ return b.text; })
-      .join('');
-
-    if (!fullText) throw new Error('No text returned. Try again.');
-
-    var recipe;
-    var jsonMatch = fullText.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      try { recipe = JSON.parse(jsonMatch[0]); } catch(e) {}
+    if (!response.ok) {
+      throw new Error(data.error || 'Worker error ' + response.status);
     }
-    if (!recipe) throw new Error('Could not parse recipe. Try another URL or fill in manually.');
+
+    var recipe = data;
     if (!recipe.name) throw new Error('Recipe name missing. The page may not contain a recipe.');
 
     if (recipe.name)        document.getElementById('f-name').value        = recipe.name;
@@ -733,7 +692,7 @@ async function importFromUrl() {
   } catch(e) {
     clearTimeout(timer);
     var msg = e.name === 'AbortError'
-      ? 'Timed out after 90 seconds. Check your connection and try again.'
+      ? 'Timed out. Check your connection and try again.'
       : e.message;
     setImportStatus('Import failed: ' + msg, 'error');
   }
