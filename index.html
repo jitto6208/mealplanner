@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kitchen Hub — Asian Dinner Recipes</title>
+<title>KKB — Kitchen Kebun Baru</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -53,13 +53,33 @@ header {
 
 .logo {
   font-family: 'Fraunces', serif;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 500;
   color: var(--cream);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
 }
 
-.logo span { color: #e87a4a; font-style: italic; }
+.logo-kkb {
+  color: #e87a4a;
+  font-style: italic;
+  font-size: 26px;
+}
+
+.logo-full {
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(250,247,242,0.22);
+  letter-spacing: .05em;
+  font-style: normal;
+  font-family: 'DM Sans', sans-serif;
+  border-left: 1px solid rgba(250,247,242,0.1);
+  padding-left: 10px;
+  line-height: 1;
+  text-transform: lowercase;
+}
 
 .header-nav { display: flex; gap: 4px; }
 
@@ -606,8 +626,23 @@ header {
 .about-wrap h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); margin: 1.75rem 0 .6rem; letter-spacing: -0.02em; }
 .about-wrap p { color: var(--ink2); font-size: 14px; line-height: 1.75; margin-bottom: .6rem; }
 .about-wrap ul { color: var(--ink2); font-size: 14px; line-height: 1.75; padding-left: 1.25rem; margin-bottom: .6rem; }
+.about-wrap ol { color: var(--ink2); font-size: 14px; line-height: 1.75; padding-left: 0; margin-bottom: .6rem; list-style: none; counter-reset: tip-counter; }
 .about-wrap li { margin-bottom: .25rem; }
 .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+.tip-block { display: flex; gap: 16px; margin-bottom: 1.5rem; align-items: flex-start; }
+.tip-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+.tip-content { flex: 1; }
+.tip-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: .35rem; }
+.tip-body { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+.tip-body p { margin-bottom: .5rem; }
+.tip-body p:last-child { margin-bottom: 0; }
+.tip-sub { list-style: none; padding-left: 0; margin-top: .6rem; }
+.tip-sub li { font-size: 14px; color: var(--ink2); line-height: 1.7; padding: 5px 0 5px 14px; border-left: 2px solid var(--border2); margin-bottom: 4px; position: relative; }
+.tip-sub li::before { content: ''; position: absolute; left: -5px; top: 13px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); border: 1.5px solid var(--accent); }
+.cadence-row { display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.cadence-row:last-child { border-bottom: none; }
+.cadence-day { color: var(--ink3); font-weight: 500; min-width: 140px; flex-shrink: 0; }
+.cadence-task { color: var(--ink2); line-height: 1.6; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
@@ -623,7 +658,7 @@ header {
 <body>
 
 <header>
-  <div class="logo">Kitchen<span>Hub</span></div>
+  <div class="logo"><span class="logo-kkb">KKB</span><span class="logo-full">Kitchen Kebun Baru</span></div>
   <div class="header-nav">
     <button class="hnav-btn active" onclick="showPage('home', this)">Recipes</button>
     <button class="hnav-btn" onclick="showPage('pantry', this)">Pantry</button>
@@ -634,9 +669,9 @@ header {
 <!-- HOME PAGE -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <p class="hero-eyebrow">Singapore-based · Asian home cooking</p>
+    <p class="hero-eyebrow">Kebun Baru · Kampung kitchen · Singapore</p>
     <h1>Your family's<br><em>house recipes,</em><br>all in one place</h1>
-    <p class="hero-sub">A curated collection of weeknight dinners spanning Japanese, Chinese, Thai, Taiwanese and Vietnamese cuisine.</p>
+    <p class="hero-sub">Cooked with kampung spirit. A collection of weeknight dinners passed around the neighbourhood — Japanese, Chinese, Thai, Taiwanese and Vietnamese.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-n" id="stat-total">—</div><div class="hero-stat-l">Recipes</div></div>
       <div class="hero-stat"><div class="hero-stat-n" id="stat-quick">—</div><div class="hero-stat-l">Under 30 min</div></div>
@@ -670,7 +705,7 @@ header {
 <div id="page-pantry" class="page">
   <div class="container">
     <h2 class="section-heading">Pantry tracker</h2>
-    <p class="section-sub">Keep your staples topped up. Click any status badge to cycle through Stocked → Low → Out.</p>
+    <p class="section-sub">Every kampung kitchen runs on the same 20 things. Keep yours stocked. Click any badge to cycle Stocked → Low → Out.</p>
 
     <div class="pantry-top">
       <span class="stat-chip" id="pt-stocked">— stocked</span>
@@ -694,26 +729,74 @@ header {
 <div id="page-about" class="page">
   <div class="container">
     <div class="about-wrap">
-      <h2 class="section-heading" style="margin-top:0">About Kitchen Hub</h2>
-      <p>Kitchen Hub is a living recipe collection and pantry tracker built for Asian home cooks. It was designed for a couple in Singapore — one who loves Japanese cuisine, one who loves Chinese, Thai and Taiwanese — and grew into a shareable tool for anyone who cooks this way.</p>
+      <h2 class="section-heading" style="margin-top:0;font-size:2.4rem;letter-spacing:-.03em"><em style="font-style:italic;color:var(--accent)">KKB</em></h2>
+      <p style="font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:.08em;text-transform:lowercase;margin-bottom:1rem;margin-top:-.2rem">kitchen kebun baru</p>
+      <p>Born in a Kebun Baru kitchen, shared with the kampung. KKB is a living recipe collection and pantry tracker for Asian home cooks — built by a couple in Singapore whose idea of a good Friday night is a pot of something braised, a cold beer, and the smell of ginger hitting hot oil.</p>
+      <p>What started as a private list grew into something worth sharing. If you cook this way — a little Japanese here, a little Cantonese there, always something simmering on Sunday — this is for you.</p>
       <hr class="divider">
       <h2>How to use it</h2>
       <ul>
         <li><strong>Recipes tab</strong> — browse, filter by cuisine or cook time, add your own dishes, and get the full recipe from Claude AI.</li>
         <li><strong>Pantry tab</strong> — track your staple ingredients. Tap a status badge to mark items as Low or Out. Hit "Top-up list" to see your shopping list at a glance.</li>
-        <li><strong>Add anything</strong> — the collection is open. Add your family's recipes and they'll appear for everyone.</li>
+        <li><strong>Add anything</strong> — the collection is open to the whole kampung. Add your family's recipes and they'll appear for everyone.</li>
       </ul>
       <hr class="divider">
       <h2>The cuisines</h2>
       <p>The current collection spans <strong>Japanese</strong> (donburi, ramen, gyudon), <strong>Cantonese Chinese</strong> (steamed fish, clay pot rice), <strong>Thai</strong> (green curry, pad kra pao), <strong>Taiwanese</strong> (lu rou fan, beef noodles) and <strong>Vietnamese</strong> (lemongrass prawn vermicelli).</p>
       <hr class="divider">
-      <h2>Tips for Singapore cooks</h2>
-      <ul>
-        <li>Wet market (Compass One or Sengkang) for fresh proteins and veg — Saturday mornings are best.</li>
-        <li>FairPrice / Cold Storage for pantry replenishment and Japanese/Thai specialty items.</li>
-        <li>Redmart for heavy dry goods on a recurring schedule (rice, soy sauce, coconut milk).</li>
-        <li>A 90-minute Sunday batch prep session — pre-cooked rice, marinated eggs, julienned ginger — makes weeknight cooking feel instant.</li>
-      </ul>
+      <h2>Tips for home cooks</h2>
+
+      <div class="tip-block">
+        <div class="tip-num">1</div>
+        <div class="tip-content">
+          <div class="tip-title">Plan in cuisine clusters</div>
+          <div class="tip-body">
+            <p>The biggest gain is batching your decisions upfront. Think in "cuisine clusters" — group nights that share a protein or a sauce base. For example, if pork belly appears in both lu rou fan and chashu ramen, braise a larger batch on Sunday and use it across two nights. The flavour actually deepens by day two.</p>
+            <p>It also helps to keep a shortlist of 15–20 house recipes you both love and can rotate. Rather than discovering new dishes every week, you spend your decision-making energy only on the 2–3 exploratory slots per week. Less decision fatigue, more consistency.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-num">2</div>
+        <div class="tip-content">
+          <div class="tip-title">Build a permanent pantry</div>
+          <div class="tip-body">
+            <p>Build a permanent checklist of the ~20 items that appear across almost every Asian dish — soy, mirin, sake, sesame oil, fish sauce, rice vinegar, oyster sauce, five spice, white pepper, sesame seeds, neutral oil, sugar, garlic, ginger. Once these are always stocked, your weekly shop shrinks to just proteins, fresh vegetables, and any specialty items for that week's dishes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-num">3</div>
+        <div class="tip-content">
+          <div class="tip-title">Batch cook on Sundays — the kampung way</div>
+          <div class="tip-body">
+            <ul class="tip-sub">
+              <li>Boil a batch of soft eggs and keep them in soy-mirin brine — they're ready to drop into ramen, donburi, or any rice bowl all week</li>
+              <li>Julienne a week's worth of ginger and store it in a small container in the fridge</li>
+              <li>Make double batches of any braising sauce (teriyaki, lu rou, or braising liquid) — they keep for a week and freeze well for a month</li>
+              <li>If doing a braise (pork belly, beef shank), cook it fully on Sunday. Monday's dinner is then just reheating and plating</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-num">4</div>
+        <div class="tip-content">
+          <div class="tip-title">A weekly operating cadence</div>
+          <div class="tip-body">
+            <p>Take the mental load off with a lightweight weekly rhythm:</p>
+            <div style="margin-top:.6rem">
+              <div class="cadence-row"><span class="cadence-day">Saturday morning</span><span class="cadence-task">Wet market run for proteins and fresh veg</span></div>
+              <div class="cadence-row"><span class="cadence-day">Saturday afternoon</span><span class="cadence-task">Confirm the week's plan and check pantry</span></div>
+              <div class="cadence-row"><span class="cadence-day">Sunday afternoon</span><span class="cadence-task">90-min batch prep session</span></div>
+              <div class="cadence-row"><span class="cadence-day">Weeknights</span><span class="cadence-task">Assemble and cook from prepped components, targeting under 25 minutes at the stove</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
