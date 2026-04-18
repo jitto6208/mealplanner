@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kitchen Hub — Asian Dinner Recipes</title>
+<title>KKB — Kitchen Kebun Baru</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -18,10 +18,6 @@
   --border2: rgba(26,17,8,0.18);
   --accent: #c8440a;
   --accent-light: #fdf0eb;
-  --gold: #b07d2a;
-  --gold-light: #fdf6e8;
-  --green: #2a6b3c;
-  --green-light: #edf7f1;
   --surface: #ffffff;
   --surface2: #f4f1ec;
   --r: 10px;
@@ -29,589 +25,174 @@
   --shadow: 0 1px 3px rgba(26,17,8,0.08), 0 4px 16px rgba(26,17,8,0.06);
 }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.6;
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; font-size: 15px; line-height: 1.6; }
 
-/* ── Header ── */
-header {
-  background: var(--ink);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--cream);
-  letter-spacing: -0.02em;
-}
-
-.logo span { color: #e87a4a; font-style: italic; }
-
+header { background: var(--ink); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+.logo { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; color: var(--cream); letter-spacing: -0.03em; display: flex; align-items: baseline; gap: 10px; }
+.logo-kkb { color: #e87a4a; font-style: italic; font-size: 26px; }
+.logo-full { font-size: 11px; font-weight: 300; color: rgba(250,247,242,0.22); letter-spacing: .05em; font-style: normal; font-family: 'DM Sans', sans-serif; border-left: 1px solid rgba(250,247,242,0.1); padding-left: 10px; line-height: 1; text-transform: lowercase; }
+.header-right { display: flex; align-items: center; gap: 8px; }
 .header-nav { display: flex; gap: 4px; }
-
-.hnav-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(250,247,242,0.6);
-  background: transparent;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
+.hnav-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: rgba(250,247,242,0.6); background: transparent; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
 .hnav-btn:hover { color: var(--cream); background: rgba(255,255,255,0.08); }
 .hnav-btn.active { color: var(--cream); background: rgba(255,255,255,0.12); }
+.admin-badge { font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 20px; background: rgba(200,68,10,0.25); color: #e87a4a; border: 1px solid rgba(232,122,74,0.3); letter-spacing: .04em; display: none; }
+.admin-badge.visible { display: inline-block; }
 
-/* ── Hero ── */
-.hero {
-  background: var(--ink);
-  padding: 4rem 2rem 5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,68,10,0.15) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-eyebrow {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: #e87a4a;
-  margin-bottom: 1rem;
-}
-
-.hero h1 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  margin-bottom: 1rem;
-}
-
+.hero { background: var(--ink); padding: 4rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,68,10,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: #e87a4a; margin-bottom: 1rem; }
+.hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; color: var(--cream); line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1rem; }
 .hero h1 em { font-style: italic; color: #e87a4a; }
-
-.hero-sub {
-  font-size: 15px;
-  color: rgba(250,247,242,0.55);
-  max-width: 440px;
-  margin: 0 auto 2rem;
-  font-weight: 300;
-}
-
-.hero-stats {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
+.hero-sub { font-size: 15px; color: rgba(250,247,242,0.55); max-width: 440px; margin: 0 auto 2rem; font-weight: 300; }
+.hero-stats { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
 .hero-stat { text-align: center; }
 .hero-stat-n { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300; color: var(--cream); line-height: 1; }
 .hero-stat-l { font-size: 11px; color: rgba(250,247,242,0.4); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
 
-/* ── Layout ── */
 .page { display: none; }
 .page.active { display: block; }
-
 .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
 
-/* ── Toolbar ── */
-.toolbar {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.filter-pill {
-  font-size: 12px;
-  font-weight: 500;
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-}
-
+.toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-pill { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border2); background: transparent; color: var(--ink3); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
 .filter-pill:hover { border-color: var(--ink2); color: var(--ink2); }
 .filter-pill.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-
 .ml { margin-left: auto; }
 .flex-gap { display: flex; gap: 8px; align-items: center; }
-
 .count-text { font-size: 13px; color: var(--ink3); }
 
-/* ── Primary button ── */
-.btn-primary {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 8px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
+.btn-primary { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 8px; border: none; background: var(--accent); color: white; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .btn-primary:hover { background: #a83808; }
-
-.btn-ghost {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--ink2);
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.btn-ghost { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border2); background: transparent; color: var(--ink2); cursor: pointer; transition: all 0.15s; }
 .btn-ghost:hover { background: var(--surface2); }
 
-/* ── Recipe Grid ── */
-.recipe-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 16px;
-}
-
-.recipe-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  animation: fadeUp 0.3s ease both;
-}
-
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+.recipe-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.25rem; display: flex; flex-direction: column; gap: 10px; transition: box-shadow 0.2s, border-color 0.2s; animation: fadeUp 0.3s ease both; }
 .recipe-card:hover { box-shadow: var(--shadow); border-color: var(--border2); }
 .recipe-card.hidden { display: none; }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-
-.card-title {
-  font-family: 'Fraunces', serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.35;
-  flex: 1;
-}
-
-.cuisine-badge {
-  font-size: 10px;
-  font-weight: 500;
-  padding: 3px 9px;
-  border-radius: 20px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  letter-spacing: .03em;
-}
-
-.c-jp { background: #e8f5f0; color: #0a5c3e; }
-.c-cn { background: #fdeee8; color: #7a2010; }
-.c-th { background: #fdf4e0; color: #6b4400; }
-.c-tw { background: #eeecfe; color: #3a2890; }
-.c-vn { background: #edf5ee; color: #1a5c28; }
-.c-kr { background: #fdeef2; color: #7a1030; }
-.c-other { background: var(--surface2); color: var(--ink3); }
-
+.card-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.35; flex: 1; }
+.cuisine-badge { font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; letter-spacing: .03em; }
+.c-jp{background:#e8f5f0;color:#0a5c3e} .c-cn{background:#fdeee8;color:#7a2010} .c-th{background:#fdf4e0;color:#6b4400}
+.c-tw{background:#eeecfe;color:#3a2890} .c-vn{background:#edf5ee;color:#1a5c28} .c-kr{background:#fdeef2;color:#7a1030} .c-other{background:var(--surface2);color:var(--ink3)}
 .card-desc { font-size: 13px; color: var(--ink2); line-height: 1.55; flex: 1; }
-
 .card-meta { display: flex; gap: 14px; }
-.meta-chip { font-size: 11px; color: var(--ink3); display: flex; align-items: center; gap: 4px; }
-
+.meta-chip { font-size: 11px; color: var(--ink3); }
 .card-footer { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-
 .diff-badge { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
-.d-easy { background: #edf5ee; color: #1a5c28; }
-.d-med  { background: #fdf4e0; color: #6b4400; }
-.d-hard { background: #fdeee8; color: #7a2010; }
-
+.d-easy{background:#edf5ee;color:#1a5c28} .d-med{background:#fdf4e0;color:#6b4400} .d-hard{background:#fdeee8;color:#7a2010}
 .card-actions { display: flex; gap: 6px; margin-left: auto; }
-
-.action-btn {
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-}
+.action-btn { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--ink3); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
 .action-btn:hover { background: var(--surface2); color: var(--ink); }
 .action-btn.del:hover { background: #fdeee8; color: var(--accent); border-color: #e8b4a0; }
-.action-btn.get-recipe { color: var(--accent); border-color: #e8b4a0; }
-.action-btn.get-recipe:hover { background: var(--accent-light); }
-
-/* submitted-by */
+.action-btn.view { color: var(--accent); border-color: #e8b4a0; }
+.action-btn.view:hover { background: var(--accent-light); }
+.admin-only { display: none; }
+.admin-mode .admin-only { display: inline-flex; }
 .submitted-by { font-size: 10px; color: var(--ink3); margin-top: 2px; }
 
-/* ── Section heading ── */
-.section-heading {
-  font-family: 'Fraunces', serif;
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--ink);
-  margin-bottom: .3rem;
-  letter-spacing: -0.02em;
-}
+.rv-backdrop { display: none; position: fixed; inset: 0; background: rgba(26,17,8,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto; }
+.rv-backdrop.open { display: flex; }
+.rv-modal { background: var(--surface); border-radius: var(--r-lg); width: 100%; max-width: 580px; animation: fadeUp .2s ease both; overflow: hidden; margin: auto; }
+.rv-header { background: var(--ink); padding: 1.5rem 1.75rem 1.25rem; position: relative; }
+.rv-cuisine { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #e87a4a; margin-bottom: .4rem; }
+.rv-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 300; color: var(--cream); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: .75rem; }
+.rv-meta { display: flex; gap: 14px; flex-wrap: wrap; }
+.rv-chip { font-size: 11px; color: rgba(250,247,242,0.5); }
+.rv-close { position: absolute; top: 1rem; right: 1rem; width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(250,247,242,0.6); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+.rv-close:hover { background: rgba(255,255,255,0.1); color: var(--cream); }
+.rv-body { padding: 1.5rem 1.75rem; }
+.rv-section-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); margin-bottom: .75rem; padding-bottom: .5rem; border-bottom: 1px solid var(--border); }
+.rv-ingredients { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; margin-bottom: 1.5rem; }
+.rv-ing { font-size: 13px; color: var(--ink2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
+.rv-ing-amt { color: var(--ink3); white-space: nowrap; flex-shrink: 0; }
+.rv-steps { margin-bottom: 1.25rem; }
+.rv-step { display: flex; gap: 14px; margin-bottom: 1.1rem; }
+.rv-step:last-child { margin-bottom: 0; }
+.rv-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.rv-step-body { flex: 1; }
+.rv-step-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.rv-step-text { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+.rv-timer { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 20px; margin-top: 5px; font-weight: 500; }
+.rv-notes { background: var(--surface2); border-radius: var(--r); padding: .85rem 1rem; font-size: 12px; color: var(--ink2); line-height: 1.65; margin-top: 1rem; }
+.rv-notes-label { font-weight: 500; color: var(--ink); margin-bottom: .25rem; font-size: 12px; }
+.rv-user-steps { font-size: 13px; color: var(--ink2); line-height: 1.7; white-space: pre-wrap; }
+.rv-no-steps { font-size: 13px; color: var(--ink3); font-style: italic; padding: .5rem 0; }
+
+.section-heading { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 300; color: var(--ink); margin-bottom: .3rem; letter-spacing: -0.02em; }
 .section-sub { font-size: 13px; color: var(--ink3); margin-bottom: 1.5rem; }
 
-/* ── Pantry ── */
 .pantry-top { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
-
-.stat-chip {
-  font-size: 12px;
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--ink3);
-  background: var(--surface);
-}
-
+.stat-chip { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); color: var(--ink3); background: var(--surface); }
 .pantry-section { margin-bottom: 1.5rem; }
-.pantry-sec-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: .5rem;
-  padding-bottom: .4rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.pantry-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
-  gap: 10px;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
+.pantry-sec-label { font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); margin-bottom: .5rem; padding-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.pantry-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .pantry-row:last-child { border-bottom: none; }
-
 .pantry-name { font-size: 14px; color: var(--ink); }
 .pantry-note { font-size: 11px; color: var(--ink3); margin-top: 1px; }
 .pantry-uses { font-size: 11px; color: var(--ink3); white-space: nowrap; }
-
-.status-btn {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  min-width: 72px;
-  text-align: center;
-  font-family: 'DM Sans', sans-serif;
-  transition: opacity 0.15s;
-}
+.status-btn { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; border: none; cursor: pointer; min-width: 72px; text-align: center; font-family: 'DM Sans', sans-serif; transition: opacity 0.15s; }
 .status-btn:hover { opacity: .8; }
-.s-stocked { background: #edf5ee; color: #1a5c28; }
-.s-low     { background: #fdf4e0; color: #6b4400; }
-.s-out     { background: #fdeee8; color: #7a2010; }
-
-.del-pantry {
-  font-size: 14px;
-  line-height: 1;
-  padding: 3px 7px;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.s-stocked{background:#edf5ee;color:#1a5c28} .s-low{background:#fdf4e0;color:#6b4400} .s-out{background:#fdeee8;color:#7a2010}
+.del-pantry { font-size: 14px; line-height: 1; padding: 3px 7px; border-radius: 5px; border: 1px solid transparent; background: transparent; color: var(--ink3); cursor: pointer; transition: all 0.15s; }
 .del-pantry:hover { background: #fdeee8; color: var(--accent); border-color: #e8b4a0; }
-
-.shoplist-box {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.1rem 1.25rem;
-  margin-top: 1.5rem;
-  display: none;
-}
+.shoplist-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 1.1rem 1.25rem; margin-top: 1.5rem; display: none; }
 .shoplist-box.visible { display: block; animation: fadeUp .25s ease both; }
 .shoplist-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; margin-bottom: .75rem; color: var(--ink); }
 .shop-row { font-size: 13px; color: var(--ink2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
 .shop-row:last-child { border-bottom: none; }
 .sbadge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
-.sb-low { background: #fdf4e0; color: #6b4400; }
-.sb-out { background: #fdeee8; color: #7a2010; }
+.sb-low{background:#fdf4e0;color:#6b4400} .sb-out{background:#fdeee8;color:#7a2010}
 
-/* ── Recipe viewer modal ── */
-.rv-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(26,17,8,0.55);
-  z-index: 200;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 2rem 1rem;
-  overflow-y: auto;
-}
-.rv-backdrop.open { display: flex; }
-.rv-modal {
-  background: var(--surface);
-  border-radius: var(--r-lg);
-  width: 100%;
-  max-width: 580px;
-  animation: fadeUp .2s ease both;
-  overflow: hidden;
-  margin: auto;
-}
-.rv-header {
-  background: var(--ink);
-  padding: 1.5rem 1.75rem 1.25rem;
-  position: relative;
-}
-.rv-cuisine {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: #e87a4a;
-  margin-bottom: .4rem;
-}
-.rv-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin-bottom: .75rem;
-}
-.rv-meta { display: flex; gap: 14px; flex-wrap: wrap; }
-.rv-chip { font-size: 11px; color: rgba(250,247,242,0.5); }
-.rv-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: transparent;
-  color: rgba(250,247,242,0.6);
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .15s;
-}
-.rv-close:hover { background: rgba(255,255,255,0.1); color: var(--cream); }
-.rv-body { padding: 1.5rem 1.75rem; }
-.rv-section-label {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: .75rem;
-  padding-bottom: .5rem;
-  border-bottom: 1px solid var(--border);
-}
-.rv-ingredients {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 16px;
-  margin-bottom: 1.5rem;
-}
-.rv-ing {
-  font-size: 13px;
-  color: var(--ink2);
-  padding: 5px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-}
-.rv-ing-amt { color: var(--ink3); white-space: nowrap; flex-shrink: 0; }
-.rv-steps { margin-bottom: 1.25rem; }
-.rv-step { display: flex; gap: 14px; margin-bottom: 1.1rem; }
-.rv-step:last-child { margin-bottom: 0; }
-.rv-step-num {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.rv-step-body { flex: 1; }
-.rv-step-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.rv-step-text { font-size: 13px; color: var(--ink2); line-height: 1.65; }
-.rv-timer {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--accent);
-  background: var(--accent-light);
-  padding: 2px 8px;
-  border-radius: 20px;
-  margin-top: 5px;
-  font-weight: 500;
-}
-.rv-notes {
-  background: var(--surface2);
-  border-radius: var(--r);
-  padding: .85rem 1rem;
-  font-size: 12px;
-  color: var(--ink2);
-  line-height: 1.65;
-  margin-top: 1rem;
-}
-.rv-notes-label { font-weight: 500; color: var(--ink); margin-bottom: .25rem; font-size: 12px; }
-.rv-user-steps { font-size: 13px; color: var(--ink2); line-height: 1.7; white-space: pre-wrap; }
-.rv-no-steps { font-size: 13px; color: var(--ink3); font-style: italic; padding: .5rem 0; }
-
-/* ── Modal ── */
-.modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(26,17,8,0.5);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
+.modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(26,17,8,0.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto; }
 .modal-backdrop.open { display: flex; }
-
-.modal {
-  background: var(--surface);
-  border-radius: var(--r-lg);
-  padding: 1.75rem;
-  width: 100%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: fadeUp .2s ease both;
-}
-
-.modal-title {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 1.25rem;
-  color: var(--ink);
-}
-
+.modal { background: var(--surface); border-radius: var(--r-lg); padding: 1.75rem; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: fadeUp .2s ease both; margin: auto; }
+.modal-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; margin-bottom: 1.25rem; color: var(--ink); }
 .field { margin-bottom: 14px; }
-.field label { font-size: 12px; color: var(--ink3); display: block; margin-bottom: 5px; font-weight: 500; letter-spacing: .02em; }
-.field input, .field textarea, .field select {
-  width: 100%;
-  font-size: 14px;
-  padding: 9px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border2);
-  background: var(--cream);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  outline: none;
-  transition: border-color .15s;
-}
+.field label { font-size: 12px; color: var(--ink3); display: block; margin-bottom: 5px; font-weight: 500; }
+.field input, .field textarea, .field select { width: 100%; font-size: 14px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border2); background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .15s; }
 .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
 .field textarea { min-height: 72px; resize: vertical; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
 .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
 
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--ink);
-  color: var(--cream);
-  font-size: 13px;
-  padding: 10px 18px;
-  border-radius: 8px;
-  z-index: 300;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all .25s ease;
-  pointer-events: none;
-}
+.toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--ink); color: var(--cream); font-size: 13px; padding: 10px 18px; border-radius: 8px; z-index: 300; opacity: 0; transform: translateY(8px); transition: all .25s ease; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateY(0); }
 
-/* ── No results ── */
-.empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--ink3);
-  font-size: 14px;
-}
+.loading-state { text-align: center; padding: 3rem 1rem; color: var(--ink3); }
+.loading-spinner { width: 24px; height: 24px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 1rem; }
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--ink3); font-size: 14px; }
 .empty-state .big { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--ink2); margin-bottom: .5rem; font-weight: 300; }
 
-/* ── About page ── */
 .about-wrap { max-width: 680px; margin: 0 auto; }
 .about-wrap h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 500; color: var(--ink); margin: 1.75rem 0 .6rem; letter-spacing: -0.02em; }
 .about-wrap p { color: var(--ink2); font-size: 14px; line-height: 1.75; margin-bottom: .6rem; }
 .about-wrap ul { color: var(--ink2); font-size: 14px; line-height: 1.75; padding-left: 1.25rem; margin-bottom: .6rem; }
 .about-wrap li { margin-bottom: .25rem; }
 .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+.tip-block { display: flex; gap: 16px; margin-bottom: 1.5rem; align-items: flex-start; }
+.tip-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+.tip-content { flex: 1; }
+.tip-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: .35rem; }
+.tip-body { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+.tip-body p { margin-bottom: .5rem; }
+.tip-body p:last-child { margin-bottom: 0; }
+.tip-sub { list-style: none; padding-left: 0; margin-top: .6rem; }
+.tip-sub li { font-size: 14px; color: var(--ink2); line-height: 1.7; padding: 5px 0 5px 14px; border-left: 2px solid var(--border2); margin-bottom: 4px; position: relative; }
+.tip-sub li::before { content: ''; position: absolute; left: -5px; top: 13px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); border: 1.5px solid var(--accent); }
+.cadence-row { display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.cadence-row:last-child { border-bottom: none; }
+.cadence-day { color: var(--ink3); font-weight: 500; min-width: 140px; flex-shrink: 0; }
+.cadence-task { color: var(--ink2); line-height: 1.6; }
 
-/* ── Responsive ── */
 @media (max-width: 600px) {
   header { padding: 0 1rem; }
+  .logo-full { display: none; }
   .hero { padding: 2.5rem 1rem 3.5rem; }
   .container { padding: 1.5rem 1rem; }
   .hero-stats { gap: 1.25rem; }
@@ -623,65 +204,66 @@ header {
 <body>
 
 <header>
-  <div class="logo">Kitchen<span>Hub</span></div>
-  <div class="header-nav">
-    <button class="hnav-btn active" onclick="showPage('home', this)">Recipes</button>
-    <button class="hnav-btn" onclick="showPage('pantry', this)">Pantry</button>
-    <button class="hnav-btn" onclick="showPage('about', this)">About</button>
+  <div class="logo">
+    <span class="logo-kkb">KKB</span>
+    <span class="logo-full">kitchen kebun baru</span>
+  </div>
+  <div class="header-right">
+    <span class="admin-badge" id="admin-badge">Admin</span>
+    <div class="header-nav">
+      <button class="hnav-btn active" onclick="showPage('home',this)">Recipes</button>
+      <button class="hnav-btn" onclick="showPage('pantry',this)">Pantry</button>
+      <button class="hnav-btn" onclick="showPage('about',this)">About</button>
+    </div>
   </div>
 </header>
 
-<!-- HOME PAGE -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <p class="hero-eyebrow">Singapore-based · Asian home cooking</p>
+    <p class="hero-eyebrow">Kebun Baru · Kampung kitchen · Singapore</p>
     <h1>Your family's<br><em>house recipes,</em><br>all in one place</h1>
-    <p class="hero-sub">A curated collection of weeknight dinners spanning Japanese, Chinese, Thai, Taiwanese and Vietnamese cuisine.</p>
+    <p class="hero-sub">Cooked with kampung spirit. A collection of weeknight dinners passed around the neighbourhood — Japanese, Chinese, Thai, Taiwanese and Vietnamese.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-n" id="stat-total">—</div><div class="hero-stat-l">Recipes</div></div>
       <div class="hero-stat"><div class="hero-stat-n" id="stat-quick">—</div><div class="hero-stat-l">Under 30 min</div></div>
       <div class="hero-stat"><div class="hero-stat-n" id="stat-easy">—</div><div class="hero-stat-l">Easy dishes</div></div>
     </div>
   </div>
-
   <div class="container">
     <div class="toolbar">
-      <button class="filter-pill active" onclick="filterBy('all', this)">All</button>
-      <button class="filter-pill" onclick="filterBy('jp', this)">Japanese</button>
-      <button class="filter-pill" onclick="filterBy('cn', this)">Chinese</button>
-      <button class="filter-pill" onclick="filterBy('th', this)">Thai</button>
-      <button class="filter-pill" onclick="filterBy('tw', this)">Taiwanese</button>
-      <button class="filter-pill" onclick="filterBy('vn', this)">Vietnamese</button>
-      <button class="filter-pill" onclick="filterBy('quick', this)">Under 30 min</button>
+      <button class="filter-pill active" onclick="filterBy('all',this)">All</button>
+      <button class="filter-pill" onclick="filterBy('jp',this)">Japanese</button>
+      <button class="filter-pill" onclick="filterBy('cn',this)">Chinese</button>
+      <button class="filter-pill" onclick="filterBy('th',this)">Thai</button>
+      <button class="filter-pill" onclick="filterBy('tw',this)">Taiwanese</button>
+      <button class="filter-pill" onclick="filterBy('vn',this)">Vietnamese</button>
+      <button class="filter-pill" onclick="filterBy('quick',this)">Under 30 min</button>
       <div class="flex-gap ml">
         <span class="count-text" id="recipe-count"></span>
-        <button class="btn-primary" onclick="openAddRecipe()">+ Add recipe</button>
+        <button class="btn-primary admin-only" onclick="openAddRecipe()">+ Add recipe</button>
       </div>
     </div>
-    <div class="recipe-grid" id="recipe-grid"></div>
+    <div id="recipe-grid" class="recipe-grid"></div>
     <div class="empty-state" id="empty-state" style="display:none">
-      <div class="big">No recipes found</div>
-      Try a different filter, or add a new dish.
+      <div class="big">No recipes yet</div>
+      The kampung pot is empty — check back soon.
     </div>
   </div>
 </div>
 
-<!-- PANTRY PAGE -->
 <div id="page-pantry" class="page">
   <div class="container">
     <h2 class="section-heading">Pantry tracker</h2>
-    <p class="section-sub">Keep your staples topped up. Click any status badge to cycle through Stocked → Low → Out.</p>
-
+    <p class="section-sub">Every kampung kitchen runs on the same 20 things. Keep yours stocked. Click any badge to cycle Stocked → Low → Out.</p>
     <div class="pantry-top">
       <span class="stat-chip" id="pt-stocked">— stocked</span>
       <span class="stat-chip" id="pt-low">— low</span>
       <span class="stat-chip" id="pt-out">— out</span>
       <div class="flex-gap ml">
         <button class="btn-ghost" onclick="toggleShopList()">Top-up list</button>
-        <button class="btn-primary" onclick="openAddPantry()">+ Add item</button>
+        <button class="btn-primary admin-only" onclick="openAddPantry()">+ Add item</button>
       </div>
     </div>
-
     <div id="pantry-body"></div>
     <div class="shoplist-box" id="shoplist">
       <p class="shoplist-title">Top-up shopping list</p>
@@ -690,30 +272,71 @@ header {
   </div>
 </div>
 
-<!-- ABOUT PAGE -->
 <div id="page-about" class="page">
   <div class="container">
     <div class="about-wrap">
-      <h2 class="section-heading" style="margin-top:0">About Kitchen Hub</h2>
-      <p>Kitchen Hub is a living recipe collection and pantry tracker built for Asian home cooks. It was designed for a couple in Singapore — one who loves Japanese cuisine, one who loves Chinese, Thai and Taiwanese — and grew into a shareable tool for anyone who cooks this way.</p>
+      <h2 class="section-heading" style="margin-top:0;font-size:2.4rem;letter-spacing:-.03em"><em style="font-style:italic;color:var(--accent)">KKB</em></h2>
+      <p style="font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:.08em;text-transform:lowercase;margin-bottom:1rem;margin-top:-.2rem">kitchen kebun baru</p>
+      <p>Born in a Kebun Baru kitchen, shared with the kampung. KKB is a living recipe collection and pantry tracker for Asian home cooks — built by a couple in Singapore whose idea of a good Friday night is a pot of something braised, a cold beer, and the smell of ginger hitting hot oil.</p>
+      <p>What started as a private list grew into something worth sharing. If you cook this way — a little Japanese here, a little Cantonese there, always something simmering on Sunday — this is for you.</p>
       <hr class="divider">
       <h2>How to use it</h2>
       <ul>
-        <li><strong>Recipes tab</strong> — browse, filter by cuisine or cook time, add your own dishes, and get the full recipe from Claude AI.</li>
+        <li><strong>Recipes tab</strong> — browse, filter by cuisine or cook time, and view the full step-by-step recipe for any dish.</li>
         <li><strong>Pantry tab</strong> — track your staple ingredients. Tap a status badge to mark items as Low or Out. Hit "Top-up list" to see your shopping list at a glance.</li>
-        <li><strong>Add anything</strong> — the collection is open. Add your family's recipes and they'll appear for everyone.</li>
+        <li><strong>(WIP) Add anything</strong> — the collection is open to the whole kampung. Add your family's recipes and they'll appear for everyone.</li>
       </ul>
       <hr class="divider">
       <h2>The cuisines</h2>
       <p>The current collection spans <strong>Japanese</strong> (donburi, ramen, gyudon), <strong>Cantonese Chinese</strong> (steamed fish, clay pot rice), <strong>Thai</strong> (green curry, pad kra pao), <strong>Taiwanese</strong> (lu rou fan, beef noodles) and <strong>Vietnamese</strong> (lemongrass prawn vermicelli).</p>
       <hr class="divider">
-      <h2>Tips for Singapore cooks</h2>
-      <ul>
-        <li>Wet market (Compass One or Sengkang) for fresh proteins and veg — Saturday mornings are best.</li>
-        <li>FairPrice / Cold Storage for pantry replenishment and Japanese/Thai specialty items.</li>
-        <li>Redmart for heavy dry goods on a recurring schedule (rice, soy sauce, coconut milk).</li>
-        <li>A 90-minute Sunday batch prep session — pre-cooked rice, marinated eggs, julienned ginger — makes weeknight cooking feel instant.</li>
-      </ul>
+      <h2>Tips for home cooks</h2>
+      <div class="tip-block">
+        <div class="tip-num">1</div>
+        <div class="tip-content">
+          <div class="tip-title">Plan in cuisine clusters</div>
+          <div class="tip-body">
+            <p>The biggest gain is batching your decisions upfront. Think in "cuisine clusters" — group nights that share a protein or a sauce base. For example, if pork belly appears in both lu rou fan and chashu ramen, braise a larger batch on Sunday and use it across two nights. The flavour actually deepens by day two.</p>
+            <p>It also helps to keep a shortlist of 15–20 house recipes you both love and can rotate. Rather than discovering new dishes every week, you spend your decision-making energy only on the 2–3 exploratory slots per week. Less decision fatigue, more consistency.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-block">
+        <div class="tip-num">2</div>
+        <div class="tip-content">
+          <div class="tip-title">Build a permanent pantry</div>
+          <div class="tip-body"><p>Build a permanent checklist of the ~20 items that appear across almost every Asian dish — soy, mirin, sake, sesame oil, fish sauce, rice vinegar, oyster sauce, five spice, white pepper, sesame seeds, neutral oil, sugar, garlic, ginger. Once these are always stocked, your weekly shop shrinks to just proteins, fresh vegetables, and any specialty items for that week's dishes.</p></div>
+        </div>
+      </div>
+      <div class="tip-block">
+        <div class="tip-num">3</div>
+        <div class="tip-content">
+          <div class="tip-title">Batch cook on Sundays — the kampung way</div>
+          <div class="tip-body">
+            <ul class="tip-sub">
+              <li>Boil a batch of soft eggs and keep them in soy-mirin brine — they're ready to drop into ramen, donburi, or any rice bowl all week</li>
+              <li>Julienne a week's worth of ginger and store it in a small container in the fridge</li>
+              <li>Make double batches of any braising sauce (teriyaki, lu rou, or braising liquid) — they keep for a week and freeze well for a month</li>
+              <li>If doing a braise (pork belly, beef shank), cook it fully on Sunday. Monday's dinner is then just reheating and plating</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tip-block">
+        <div class="tip-num">4</div>
+        <div class="tip-content">
+          <div class="tip-title">A weekly operating cadence</div>
+          <div class="tip-body">
+            <p>Take the mental load off with a lightweight weekly rhythm:</p>
+            <div style="margin-top:.6rem">
+              <div class="cadence-row"><span class="cadence-day">Saturday morning</span><span class="cadence-task">Wet market run for proteins and fresh veg</span></div>
+              <div class="cadence-row"><span class="cadence-day">Saturday afternoon</span><span class="cadence-task">Confirm the week's plan and check pantry</span></div>
+              <div class="cadence-row"><span class="cadence-day">Sunday afternoon</span><span class="cadence-task">90-min batch prep session</span></div>
+              <div class="cadence-row"><span class="cadence-day">Weeknights</span><span class="cadence-task">Assemble and cook from prepped components, targeting under 25 minutes at the stove</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -739,31 +362,19 @@ header {
     <div class="field"><label>Short description</label><textarea id="f-desc" placeholder="A sentence or two about the dish..."></textarea></div>
     <div class="field-row">
       <div class="field"><label>Cuisine</label>
-        <select id="f-cuisine">
-          <option value="jp">Japanese</option>
-          <option value="cn">Chinese</option>
-          <option value="th">Thai</option>
-          <option value="tw">Taiwanese</option>
-          <option value="vn">Vietnamese</option>
-          <option value="kr">Korean</option>
-          <option value="other">Other</option>
-        </select>
+        <select id="f-cuisine"><option value="jp">Japanese</option><option value="cn">Chinese</option><option value="th">Thai</option><option value="tw">Taiwanese</option><option value="vn">Vietnamese</option><option value="kr">Korean</option><option value="other">Other</option></select>
       </div>
       <div class="field"><label>Cook time (min)</label><input id="f-time" type="number" min="5" max="300" placeholder="30"></div>
     </div>
     <div class="field-row">
       <div class="field"><label>Difficulty</label>
-        <select id="f-diff">
-          <option value="easy">Easy</option>
-          <option value="med">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
+        <select id="f-diff"><option value="easy">Easy</option><option value="med">Medium</option><option value="hard">Hard</option></select>
       </div>
       <div class="field"><label>Servings</label><input id="f-serves" placeholder="e.g. 2"></div>
     </div>
-    <div class="field"><label>Your name (optional)</label><input id="f-author" placeholder="e.g. Jian"></div>
-    <div class="field"><label>Ingredients (one per line)</label><textarea id="f-ingredients" placeholder="e.g.&#10;2 salmon fillets&#10;3 tbsp soy sauce&#10;2 tbsp mirin" style="min-height:90px"></textarea></div>
-    <div class="field"><label>Method / steps</label><textarea id="f-steps" placeholder="Write your step-by-step instructions here..." style="min-height:120px"></textarea></div>
+    <div class="field"><label>Author</label><input id="f-author" placeholder="e.g. Jitto"></div>
+    <div class="field"><label>Ingredients (one per line)</label><textarea id="f-ingredients" placeholder="2 salmon fillets&#10;3 tbsp soy sauce" style="min-height:90px"></textarea></div>
+    <div class="field"><label>Method / steps</label><textarea id="f-steps" placeholder="Step-by-step instructions..." style="min-height:120px"></textarea></div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeRecipeModal()">Cancel</button>
       <button class="btn-primary" onclick="saveRecipe()">Save recipe</button>
@@ -791,11 +402,7 @@ header {
       <div class="field"><label>Used in</label><input id="p-uses" placeholder="e.g. N3,6,9"></div>
     </div>
     <div class="field"><label>Stock status</label>
-      <select id="p-status">
-        <option value="stocked">Stocked</option>
-        <option value="low">Low</option>
-        <option value="out">Out</option>
-      </select>
+      <select id="p-status"><option value="stocked">Stocked</option><option value="low">Low</option><option value="out">Out</option></select>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closePantryModal()">Cancel</button>
@@ -807,54 +414,29 @@ header {
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Data ──────────────────────────────────────────────────────────
-var RECIPE_KEY = 'kitchenhub-recipes-v2';
-var PANTRY_KEY = 'kitchenhub-pantry-v2';
+var SUPABASE_URL = 'https://wlcmhndnhhhvsulsxmkc.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsY21obmRuaGhodnN1bHN4bWtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MDE2OTIsImV4cCI6MjA5MjA3NzY5Mn0.x1IoKQmtewVmnSUvwJERXX3eMAEMPz84F3DKhqTXyf0';
+var ADMIN_SECRET = 'kkbsecret';
+var isAdmin = (new URLSearchParams(window.location.search)).get('admin') === ADMIN_SECRET;
 
-var DEFAULT_RECIPES = [
-  {id:'r1',name:'Salmon teriyaki donburi',desc:'Pan-seared salmon with a glossy teriyaki glaze, pickled cucumber, edamame and a soft-boiled egg over steamed Japanese rice.',cuisine:'jp',time:25,diff:'easy',serves:'2',author:'Kitchen Hub'},
-  {id:'r2',name:'Lu rou fan (braised pork rice)',desc:'Melt-in-the-mouth pork belly braised in soy, rice wine and five spice, served over rice with a jammy braised egg and pickled mustard greens.',cuisine:'tw',time:75,diff:'med',serves:'2–3',author:'Kitchen Hub'},
-  {id:'r3',name:'Thai green curry with chicken',desc:'Fragrant coconut milk curry with chicken thighs, Thai eggplant and kaffir lime leaves, served alongside Thai basil jasmine rice.',cuisine:'th',time:35,diff:'easy',serves:'2',author:'Kitchen Hub'},
-  {id:'r4',name:'Cantonese steamed fish',desc:'Whole sea bass or batang steamed simply with ginger, finished with a dramatic hot oil pour, light soy, julienned scallion and coriander.',cuisine:'cn',time:20,diff:'easy',serves:'2',author:'Kitchen Hub'},
-  {id:'r5',name:'Miso ramen with chashu pork',desc:'Rich miso broth with slow-braised chashu pork belly, ramen noodles, a soft egg, bamboo shoots and nori.',cuisine:'jp',time:60,diff:'med',serves:'2',author:'Kitchen Hub'},
-  {id:'r6',name:'Pad kra pao (Thai basil pork)',desc:'Minced pork stir-fried with Thai holy basil, chilli and garlic, served over jasmine rice with a crispy fried egg.',cuisine:'th',time:20,diff:'easy',serves:'2',author:'Kitchen Hub'},
-  {id:'r7',name:'Taiwanese beef noodle soup',desc:'Braised beef shank in a deep, spiced soy broth served over wide noodles with bean sprouts and chilli oil.',cuisine:'tw',time:90,diff:'med',serves:'2–3',author:'Kitchen Hub'},
-  {id:'r8',name:'Cantonese clay pot chicken rice',desc:'Chicken thighs, lap cheong and shiitake mushrooms slow-cooked over jasmine rice in a clay pot with dark soy and ginger.',cuisine:'cn',time:50,diff:'med',serves:'2',author:'Kitchen Hub'},
-  {id:'r9',name:'Vietnamese lemongrass prawn vermicelli',desc:'Lemongrass-marinated prawns over rice vermicelli with fresh herbs, bean sprouts and a zingy nuoc cham dipping sauce.',cuisine:'vn',time:30,diff:'easy',serves:'2',author:'Kitchen Hub'},
-  {id:'r10',name:'Gyudon (Japanese beef rice bowl)',desc:'Thinly sliced beef and onion simmered in dashi, mirin and soy, served over steamed rice with a soft egg.',cuisine:'jp',time:25,diff:'easy',serves:'2',author:'Kitchen Hub'}
-];
+if (isAdmin) {
+  document.body.classList.add('admin-mode');
+  document.getElementById('admin-badge').classList.add('visible');
+}
 
-var DEFAULT_PANTRY = [
-  {id:'p1',name:'Light soy sauce',note:'Kikkoman or Pearl River Bridge',cat:'Sauces & liquid seasonings',uses:'N1,4–8,10',status:'stocked'},
-  {id:'p2',name:'Dark soy sauce',note:'For colour & depth in braises',cat:'Sauces & liquid seasonings',uses:'N2,8',status:'stocked'},
-  {id:'p3',name:'Mirin',note:'Kikkoman or Takara',cat:'Sauces & liquid seasonings',uses:'N1,5,10',status:'stocked'},
-  {id:'p4',name:'Sake / dry sherry',note:'Or Shaoxing as substitute',cat:'Sauces & liquid seasonings',uses:'N1,4,5,10',status:'stocked'},
-  {id:'p5',name:'Shaoxing rice wine',note:'Essential for Chinese braises',cat:'Sauces & liquid seasonings',uses:'N2,4,7,8',status:'stocked'},
-  {id:'p6',name:'Rice vinegar',note:'Marukan or Mizkan',cat:'Sauces & liquid seasonings',uses:'N1,5',status:'stocked'},
-  {id:'p7',name:'Fish sauce',note:'Tiparos or Megachef',cat:'Sauces & liquid seasonings',uses:'N3,6,9',status:'stocked'},
-  {id:'p8',name:'Oyster sauce',note:'Lee Kum Kee premium',cat:'Sauces & liquid seasonings',uses:'N4,8',status:'stocked'},
-  {id:'p9',name:'Sesame oil',note:'Kadoya — finisher only',cat:'Sauces & liquid seasonings',uses:'N1,4,5,8',status:'stocked'},
-  {id:'p10',name:'Neutral oil',note:'Sunflower or vegetable',cat:'Sauces & liquid seasonings',uses:'All',status:'stocked'},
-  {id:'p11',name:'Five spice powder',note:'',cat:'Dry spices & aromatics',uses:'N2',status:'stocked'},
-  {id:'p12',name:'Star anise',note:'',cat:'Dry spices & aromatics',uses:'N2,7',status:'stocked'},
-  {id:'p13',name:'White pepper',note:'',cat:'Dry spices & aromatics',uses:'N4,8',status:'stocked'},
-  {id:'p14',name:'Toasted sesame seeds',note:'',cat:'Dry spices & aromatics',uses:'N1,10',status:'stocked'},
-  {id:'p15',name:'Chilli oil / doubanjiang',note:'',cat:'Dry spices & aromatics',uses:'N7',status:'stocked'},
-  {id:'p16',name:'Sugar (white)',note:'',cat:'Dry spices & aromatics',uses:'All',status:'stocked'},
-  {id:'p17',name:'Salt',note:'',cat:'Dry spices & aromatics',uses:'All',status:'stocked'},
-  {id:'p18',name:'White miso paste',note:'Keep refrigerated',cat:'Pastes, stocks & tins',uses:'N5',status:'stocked'},
-  {id:'p19',name:'Green curry paste',note:'Mae Ploy or Maesri',cat:'Pastes, stocks & tins',uses:'N3',status:'stocked'},
-  {id:'p20',name:'Dashi stock powder',note:'Hondashi or Kayanoya',cat:'Pastes, stocks & tins',uses:'N5,10',status:'stocked'},
-  {id:'p21',name:'Coconut milk (cans)',note:'Keep 2 cans minimum',cat:'Pastes, stocks & tins',uses:'N3',status:'stocked'},
-  {id:'p22',name:'Japanese short-grain rice',note:'Koshihikari — 2kg bag',cat:'Grains & noodles',uses:'N1,2,6,10',status:'stocked'},
-  {id:'p23',name:'Thai jasmine rice',note:'1kg bag',cat:'Grains & noodles',uses:'N3,4,8',status:'stocked'},
-  {id:'p24',name:'Dried ramen noodles',note:'',cat:'Grains & noodles',uses:'N5',status:'stocked'},
-  {id:'p25',name:'Rice vermicelli (bee hoon)',note:'',cat:'Grains & noodles',uses:'N9',status:'stocked'},
-  {id:'p26',name:'Dried shiitake mushrooms',note:'',cat:'Grains & noodles',uses:'N2,8',status:'stocked'},
-  {id:'p27',name:'Eggs',note:'Keep at least 6',cat:'Fridge & freezer staples',uses:'All',status:'stocked'},
-  {id:'p28',name:'Frozen edamame (shelled)',note:'',cat:'Fridge & freezer staples',uses:'N1',status:'stocked'},
-  {id:'p29',name:'Pickled mustard greens',note:'',cat:'Fridge & freezer staples',uses:'N2',status:'stocked'}
-];
+function sbFetch(path, opts) {
+  var headers = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+  return fetch(SUPABASE_URL + '/rest/v1/' + path, Object.assign({ headers: headers }, opts || {}))
+    .then(function(r) {
+      if (!r.ok) return r.text().then(function(t){ throw new Error(t); });
+      var ct = r.headers.get('content-type') || '';
+      return ct.includes('json') ? r.json() : r.text();
+    });
+}
+function dbGet(table, query) { return sbFetch(table + '?order=created_at.asc' + (query||'')); }
+function dbInsert(table, row) { return sbFetch(table, { method: 'POST', body: JSON.stringify(row) }); }
+function dbUpdate(table, id, row) { return sbFetch(table + '?id=eq.' + id, { method: 'PATCH', body: JSON.stringify(row) }); }
+function dbDelete(table, id) { return sbFetch(table + '?id=eq.' + id, { method: 'DELETE' }); }
 
 var CUISINE_LABEL = {jp:'Japanese',cn:'Chinese',th:'Thai',tw:'Taiwanese',vn:'Vietnamese',kr:'Korean',other:'Other'};
 var CUISINE_CLASS = {jp:'c-jp',cn:'c-cn',th:'c-th',tw:'c-tw',vn:'c-vn',kr:'c-kr',other:'c-other'};
@@ -869,385 +451,57 @@ var editRecipeId = null;
 var editPantryId = null;
 var currentFilter = 'all';
 var shopVisible = false;
+var allRecipes = [];
 
-// ── Storage ──────────────────────────────────────────────────────
-function lsGet(key, def) {
-  try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }
-  catch(e) { return def; }
-}
-function lsSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
-}
-function getRecipes() { return lsGet(RECIPE_KEY, DEFAULT_RECIPES); }
-function getPantry()  { return lsGet(PANTRY_KEY, DEFAULT_PANTRY); }
-function setRecipes(d) { lsSet(RECIPE_KEY, d); }
-function setPantry(d)  { lsSet(PANTRY_KEY, d); }
-
-// ── Navigation ───────────────────────────────────────────────────
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.hnav-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
-  if(name==='pantry') renderPantry();
-  if(name==='home') renderRecipes();
+  if (name === 'pantry') loadPantry();
 }
 
-// ── Recipes ──────────────────────────────────────────────────────
-function renderRecipes() {
-  var recipes = getRecipes();
-  updateHeroStats(recipes);
+function loadRecipes() {
   var grid = document.getElementById('recipe-grid');
-  if(!recipes.length) {
-    grid.innerHTML = '';
-    document.getElementById('empty-state').style.display = 'block';
-    document.getElementById('recipe-count').textContent = '0 recipes';
-    return;
-  }
-  grid.innerHTML = recipes.map(function(r, i) {
-    return '<div class="recipe-card" data-id="'+r.id+'" data-cuisine="'+r.cuisine+'" data-time="'+r.time+'" data-diff="'+r.diff+'" style="animation-delay:'+Math.min(i*0.04,0.4)+'s">'
-      +'<div class="card-top">'
-      +'<div class="card-title">'+esc(r.name)+'</div>'
-      +'<span class="cuisine-badge '+CUISINE_CLASS[r.cuisine]+'">'+CUISINE_LABEL[r.cuisine]+'</span>'
-      +'</div>'
-      +(r.desc ? '<p class="card-desc">'+esc(r.desc)+'</p>' : '')
-      +'<div class="card-meta">'
-      +'<span class="meta-chip">'+r.time+' min</span>'
-      +'<span class="meta-chip">'+esc(r.serves||'2')+' servings</span>'
-      +'</div>'
-      +'<div class="card-footer">'
-      +'<span class="diff-badge '+DIFF_CLASS[r.diff]+'">'+DIFF_LABEL[r.diff]+'</span>'
-      +'<div class="card-actions">'
-      +'<button class="action-btn" onclick="editRecipeFn(\''+r.id+'\')">Edit</button>'
-      +'<button class="action-btn del" onclick="deleteRecipeFn(\''+r.id+'\')">Delete</button>'
-      +'<button class="action-btn get-recipe" onclick="openRecipeViewer(\''+r.id+'\')">View recipe</button>'
-      +'</div></div>'
-      +(r.author ? '<div class="submitted-by">Added by '+esc(r.author)+'</div>' : '')
-      +'</div>';
-  }).join('');
-  applyFilter(currentFilter);
+  grid.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><p>Loading from the kampung kitchen…</p></div>';
+  dbGet('recipes').then(function(data) {
+    allRecipes = data || [];
+    renderRecipes(allRecipes);
+  }).catch(function(e) {
+    grid.innerHTML = '<div class="empty-state"><div class="big">Could not connect</div>'+esc(e.message)+'</div>';
+  });
 }
 
-var FULL_RECIPES = {
-  'r1': {
-    ingredients: [
-      {amt:'2 fillets', name:'salmon, skin-on'},
-      {amt:'1.5 cups', name:'Japanese short-grain rice'},
-      {amt:'2', name:'large eggs'},
-      {amt:'100g', name:'frozen edamame, shelled'},
-      {amt:'1', name:'Japanese cucumber'},
-      {amt:'3 tbsp', name:'soy sauce'},
-      {amt:'2 tbsp', name:'mirin'},
-      {amt:'2 tbsp', name:'sake'},
-      {amt:'1 tbsp', name:'sugar'},
-      {amt:'2 tbsp', name:'rice vinegar'},
-      {amt:'½ tsp', name:'salt'},
-      {amt:'1 tbsp', name:'neutral oil'},
-      {amt:'1 tsp', name:'toasted sesame seeds'},
-      {amt:'2', name:'spring onions, sliced'}
-    ],
-    steps: [
-      {title:'Cook the rice', text:'Rinse rice under cold water until water runs clear. Cook according to packet instructions or in a rice cooker. Keep warm.'},
-      {title:'Soft-boil the eggs', text:'Bring a small pot to a rolling boil. Lower in eggs and cook for exactly 7 minutes. Transfer immediately to an ice bath, then peel and halve when ready to serve.', timer:'7 min'},
-      {title:'Pickle the cucumber', text:'Slice cucumber thinly (~3mm). Toss with rice vinegar and salt in a small bowl. Set aside for at least 10 minutes until lightly wilted and tangy.', timer:'10 min'},
-      {title:'Make the teriyaki sauce', text:'Combine soy sauce, mirin, sake and sugar in a small saucepan over medium heat. Simmer for 3–4 minutes until slightly thickened and glossy. Remove from heat.', timer:'4 min'},
-      {title:'Cook the edamame', text:'Cook edamame according to packet instructions (usually 3 minutes in boiling water). Drain and set aside.'},
-      {title:'Sear the salmon', text:'Pat salmon dry with paper towels — this is key for a crispy crust. Heat oil in a non-stick pan over medium-high. Place salmon skin-side down and press gently for 30 seconds. Sear 4 minutes until skin is crispy, then flip and cook 2 more minutes.', timer:'6 min'},
-      {title:'Glaze the salmon', text:'Reduce heat to medium-low. Pour teriyaki sauce over the salmon and spoon it over the fillets as it bubbles. Cook 1 minute until fish is glossy and well-coated.', timer:'1 min'},
-      {title:'Assemble', text:'Divide warm rice between two bowls. Place salmon fillet on top, then arrange pickled cucumber, edamame and soft-boiled egg alongside. Spoon any remaining sauce over the rice. Finish with spring onion and sesame seeds.'}
-    ],
-    notes: 'Pat the salmon very dry before searing — moisture is the enemy of a crispy skin. Pour any leftover pan sauce over the rice, not the salmon, to keep the skin crisp at the table.'
-  },
-  'r2': {
-    ingredients: [
-      {amt:'500g', name:'pork belly, cut into 2cm cubes'},
-      {amt:'4 tbsp', name:'soy sauce'},
-      {amt:'2 tbsp', name:'dark soy sauce'},
-      {amt:'2 tbsp', name:'Shaoxing rice wine'},
-      {amt:'1 tbsp', name:'sugar'},
-      {amt:'1 tsp', name:'five spice powder'},
-      {amt:'3', name:'star anise'},
-      {amt:'4 cloves', name:'garlic, smashed'},
-      {amt:'2 cups', name:'water'},
-      {amt:'4', name:'eggs'},
-      {amt:'2 cups', name:'Japanese short-grain rice, cooked'},
-      {amt:'to taste', name:'pickled mustard greens'}
-    ],
-    steps: [
-      {title:'Brown the pork', text:'Heat a splash of oil in a heavy pot or wok over medium-high heat. Add pork belly and cook until lightly browned on all sides, about 5 minutes. Remove and set aside.', timer:'5 min'},
-      {title:'Build the braise', text:'In the same pot, add sugar and let it caramelise to a light amber — about 1 minute. Add garlic and stir for 30 seconds. Return pork to the pot.'},
-      {title:'Add liquids and spices', text:'Add soy sauce, dark soy sauce, Shaoxing wine, five spice powder, star anise and water. Stir well. The liquid should just cover the pork.'},
-      {title:'Braise', text:'Bring to a boil, then reduce to a low simmer. Cover and cook for 60 minutes, stirring occasionally, until pork is very tender and sauce has thickened.', timer:'60 min'},
-      {title:'Braise the eggs', text:'After the first 20 minutes, add peeled soft-boiled eggs to the pot. Let them absorb the sauce colour for the remaining 40 minutes, turning occasionally.'},
-      {title:'Serve', text:'Spoon pork and sauce generously over steamed rice. Halve a braised egg and place alongside. Add pickled mustard greens to cut through the richness.'}
-    ],
-    notes: 'This dish deepens in flavour overnight — make extra and reheat the next day. The braising liquid also freezes well as a sauce base for other dishes.'
-  },
-  'r3': {
-    ingredients: [
-      {amt:'500g', name:'chicken thighs, boneless'},
-      {amt:'3 tbsp', name:'green curry paste (Mae Ploy)'},
-      {amt:'400ml', name:'coconut milk (1 can)'},
-      {amt:'200g', name:'Thai eggplant, quartered'},
-      {amt:'6', name:'kaffir lime leaves, torn'},
-      {amt:'2 tbsp', name:'fish sauce'},
-      {amt:'1 tsp', name:'sugar'},
-      {amt:'1 tbsp', name:'neutral oil'},
-      {amt:'1 handful', name:'Thai basil leaves'},
-      {amt:'2 cups', name:'jasmine rice, cooked'},
-      {amt:'1', name:'red chilli, sliced (garnish)'}
-    ],
-    steps: [
-      {title:'Fry the paste', text:'Heat oil in a wok or deep pan over medium heat. Add curry paste and fry for 2 minutes until fragrant and the oil separates from the paste.', timer:'2 min'},
-      {title:'Add coconut milk', text:'Pour in about half the coconut milk. Stir well to combine with the paste and bring to a simmer.'},
-      {title:'Cook the chicken', text:'Add chicken thighs (whole or sliced) to the pan. Simmer for 10 minutes until mostly cooked through, turning once.', timer:'10 min'},
-      {title:'Add vegetables', text:'Add Thai eggplant and kaffir lime leaves. Pour in remaining coconut milk. Season with fish sauce and sugar.'},
-      {title:'Simmer', text:'Cook for another 10 minutes until eggplant is tender and chicken is fully cooked. Taste and adjust fish sauce or sugar.', timer:'10 min'},
-      {title:'Finish and serve', text:'Remove from heat. Stir through Thai basil leaves — they will wilt in the residual heat. Serve over jasmine rice with sliced chilli on top.'}
-    ],
-    notes: 'Thai eggplant is sold at Mustafa or wet markets. If unavailable, use zucchini or regular eggplant cut into chunks. Mae Ploy paste is sold at FairPrice — it is noticeably spicier than Maesri, so use 2 tbsp if you prefer milder heat.'
-  },
-  'r4': {
-    ingredients: [
-      {amt:'1 whole', name:'sea bass or batang (~450g)'},
-      {amt:'40g', name:'fresh ginger, julienned'},
-      {amt:'4', name:'spring onions, julienned into 6cm strips'},
-      {amt:'4 sprigs', name:'fresh coriander'},
-      {amt:'3 tbsp', name:'light soy sauce'},
-      {amt:'1 tbsp', name:'Shaoxing wine'},
-      {amt:'½ tsp', name:'sugar'},
-      {amt:'3 tbsp', name:'neutral oil'},
-      {amt:'1 tsp', name:'sesame oil'},
-      {amt:'1 pinch', name:'white pepper'}
-    ],
-    steps: [
-      {title:'Prep the fish', text:'Score the fish with 3 diagonal cuts on each side down to the bone — this lets steam penetrate evenly. Rub with a little salt and white pepper inside and out. Stuff half the ginger into the cavity and lay the rest on top.'},
-      {title:'Set up your steamer', text:'Fill a wok with 5cm of water and bring to a rolling boil. Place the fish on a heatproof plate. Rest the plate on a metal rack or inverted bowl inside the wok so it sits above the water.'},
-      {title:'Steam the fish', text:'Once water is boiling hard, place the fish inside, cover tightly and steam for 8–10 minutes depending on thickness. The fish is done when flesh flakes easily at the thickest point and is opaque throughout.', timer:'9 min'},
-      {title:'Make the sauce', text:'While the fish steams, mix soy sauce, Shaoxing wine, sugar and sesame oil together in a small bowl until sugar dissolves.'},
-      {title:'Drain the plate', text:'Carefully remove the plate from the steamer. Tip away all the liquid that has pooled — this step is crucial as it can be bitter and will dilute your sauce.'},
-      {title:'Add toppings', text:'Lay julienned spring onion and coriander generously over the fish. Pour the soy sauce mixture evenly over everything.'},
-      {title:'The hot oil finish', text:'Heat neutral oil in a small saucepan over high heat until it just begins to smoke (~2 minutes). Pour it directly over the spring onions and coriander. It will sizzle and crackle loudly — this wilts the greens and blooms all the fragrance. Serve immediately.', timer:'2 min'}
-    ],
-    notes: 'Buy the fish the day you cook it — freshness is everything in this dish. Ask your wet market fishmonger to clean and score it for you. The oil must be smoking hot or the aromatics won\'t wilt properly.'
-  },
-  'r5': {
-    ingredients: [
-      {amt:'300g', name:'pork belly (for chashu)'},
-      {amt:'2 portions', name:'ramen noodles (fresh or dried)'},
-      {amt:'4 cups', name:'chicken or pork stock'},
-      {amt:'3 tbsp', name:'white miso paste'},
-      {amt:'1 tbsp', name:'soy sauce'},
-      {amt:'1 tsp', name:'sesame oil'},
-      {amt:'2 tsp', name:'mirin'},
-      {amt:'2', name:'soft-boiled eggs'},
-      {amt:'2 sheets', name:'nori'},
-      {amt:'2 stalks', name:'spring onion, sliced'},
-      {amt:'baby bok choy', name:'blanched, to serve'},
-      {amt:'to taste', name:'white pepper'}
-    ],
-    steps: [
-      {title:'Make chashu pork', text:'Roll pork belly tightly and tie with kitchen twine. Sear in a hot pan until browned all over. Transfer to a small pot, add soy sauce, mirin, sake and water to just cover. Simmer gently for 90 minutes until tender. Cool in the liquid, then slice.', timer:'90 min'},
-      {title:'Marinate the eggs', text:'Soft-boil eggs for 7 minutes, then peel and place in the cooled chashu braising liquid for at least 2 hours (overnight is best) until the whites are amber-coloured.', timer:'7 min'},
-      {title:'Make the miso broth', text:'Heat stock in a saucepan until just below boiling. In a ladle or small bowl, mix miso paste with a few spoonfuls of hot stock until smooth, then stir back into the pot. Add soy sauce, mirin and sesame oil. Do not boil after adding miso.'},
-      {title:'Cook the noodles', text:'Cook ramen noodles in a separate pot of boiling water according to packet instructions (usually 2–3 minutes for fresh, 4–5 for dried). Drain well.', timer:'3 min'},
-      {title:'Blanch the bok choy', text:'In the same noodle water, blanch bok choy for 90 seconds. Drain.', timer:'90 sec'},
-      {title:'Assemble the bowls', text:'Divide hot noodles between two deep bowls. Ladle the miso broth over generously. Arrange 2–3 slices of chashu, halved marinated egg, bok choy and nori on top. Finish with spring onion and white pepper.'}
-    ],
-    notes: 'The chashu and marinated eggs can both be made the day before — they keep for 3 days in the fridge and dramatically improve overnight. Never boil the broth after adding miso paste or it loses its flavour.'
-  },
-  'r6': {
-    ingredients: [
-      {amt:'400g', name:'minced pork'},
-      {amt:'1 large handful', name:'Thai holy basil leaves'},
-      {amt:'4 cloves', name:'garlic, minced'},
-      {amt:'4–6', name:'red and green chillies, sliced'},
-      {amt:'2 tbsp', name:'oyster sauce'},
-      {amt:'1 tbsp', name:'fish sauce'},
-      {amt:'1 tbsp', name:'soy sauce'},
-      {amt:'1 tsp', name:'sugar'},
-      {amt:'2 tbsp', name:'neutral oil'},
-      {amt:'2', name:'eggs (for frying)'},
-      {amt:'2 cups', name:'jasmine rice, cooked'}
-    ],
-    steps: [
-      {title:'Prep the sauce', text:'Mix oyster sauce, fish sauce, soy sauce and sugar together in a small bowl. Set aside.'},
-      {title:'Fry the aromatics', text:'Heat oil in a wok over very high heat until smoking. Add garlic and chillies and stir-fry for 30 seconds until fragrant. Do not let them burn.'},
-      {title:'Cook the pork', text:'Add minced pork and break it up quickly with a spatula. Stir-fry over high heat for 3–4 minutes until cooked through and slightly caramelised at the edges. Keep the heat high — you want a bit of char, not steaming.', timer:'4 min'},
-      {title:'Add the sauce', text:'Pour the sauce mixture over the pork and toss to coat. Cook for another 30 seconds until glossy and fragrant.'},
-      {title:'Add basil', text:'Remove from heat and immediately fold in the Thai basil leaves. The residual heat will wilt them perfectly. Do not add basil over direct heat or it turns dark and loses fragrance.'},
-      {title:'Fry the eggs', text:'In a separate pan, heat oil over high heat. When smoking, crack in the eggs. Fry until the edges are crispy and lacy but the yolk is still runny — about 90 seconds.', timer:'90 sec'},
-      {title:'Serve', text:'Plate rice in a shallow bowl, top with the pork, then crown with the crispy fried egg. Serve immediately.'}
-    ],
-    notes: 'Thai holy basil (bai krapao) is different from sweet or Italian basil — it has a slightly peppery, clove-like flavour and is essential to this dish. Find it at Mustafa or wet markets. The high heat is non-negotiable: a smoking hot wok is what gives this dish its characteristic breath of the wok (wok hei).'
-  },
-  'r7': {
-    ingredients: [
-      {amt:'500g', name:'beef shank, cut into large chunks'},
-      {amt:'4 tbsp', name:'soy sauce'},
-      {amt:'2 tbsp', name:'dark soy sauce'},
-      {amt:'2 tbsp', name:'Shaoxing wine'},
-      {amt:'1 tbsp', name:'doubanjiang (chilli bean paste)'},
-      {amt:'3', name:'star anise'},
-      {amt:'1 stick', name:'cinnamon'},
-      {amt:'4 cloves', name:'garlic'},
-      {amt:'1', name:'onion, quartered'},
-      {amt:'4 cups', name:'water or beef stock'},
-      {amt:'2 portions', name:'wide noodles or udon'},
-      {amt:'to serve', name:'bean sprouts, chilli oil, spring onion'}
-    ],
-    steps: [
-      {title:'Brown the beef', text:'Pat beef dry and season with salt. Sear in batches in a heavy pot over high heat until deep brown on all sides. Remove and set aside.', timer:'8 min'},
-      {title:'Fry the aromatics', text:'In the same pot, add a little oil. Fry onion, garlic and doubanjiang for 2 minutes until fragrant and the paste darkens slightly.'},
-      {title:'Build the broth', text:'Return beef to the pot. Add soy sauces, Shaoxing wine, star anise, cinnamon and stock or water. Bring to a boil.'},
-      {title:'Long braise', text:'Reduce to the lowest simmer, cover and cook for 90 minutes until beef is very tender and falling apart. Top up with water if needed to keep beef submerged.', timer:'90 min'},
-      {title:'Cook the noodles', text:'Cook noodles in boiling salted water according to packet instructions. Drain well.'},
-      {title:'Assemble', text:'Place noodles in deep bowls. Ladle over the broth and arrange beef chunks on top. Add bean sprouts, a drizzle of chilli oil and sliced spring onion.'}
-    ],
-    notes: 'Start this dish at least 2 hours before you plan to eat — the long braise is essential for the collagen in beef shank to melt into the broth and give it body. Like lu rou fan, it is even better the next day.'
-  },
-  'r8': {
-    ingredients: [
-      {amt:'4', name:'chicken thighs, bone-in'},
-      {amt:'2 links', name:'lap cheong (Chinese sausage), sliced'},
-      {amt:'6', name:'dried shiitake mushrooms, soaked'},
-      {amt:'1.5 cups', name:'jasmine rice, rinsed'},
-      {amt:'2 tbsp', name:'soy sauce'},
-      {amt:'1 tbsp', name:'dark soy sauce'},
-      {amt:'1 tbsp', name:'oyster sauce'},
-      {amt:'1 tbsp', name:'Shaoxing wine'},
-      {amt:'1 tsp', name:'sesame oil'},
-      {amt:'1 tsp', name:'sugar'},
-      {amt:'4 slices', name:'fresh ginger'},
-      {amt:'2 stalks', name:'spring onion, sliced'}
-    ],
-    steps: [
-      {title:'Soak the mushrooms', text:'Soak dried shiitake in warm water for 30 minutes until fully rehydrated. Squeeze out excess water, remove stems and halve. Reserve the soaking liquid.', timer:'30 min'},
-      {title:'Marinate the chicken', text:'Mix soy sauce, dark soy sauce, oyster sauce, Shaoxing wine, sesame oil and sugar. Coat chicken thighs and marinate for at least 20 minutes.', timer:'20 min'},
-      {title:'Cook the rice', text:'Place rinsed rice in the clay pot (or a heavy-based pot). Add the mushroom soaking liquid topped up with water to the usual rice water level. Bring to a boil, then reduce to low.'},
-      {title:'Add toppings', text:'Once the rice water has mostly absorbed (about 8 minutes), arrange the marinated chicken thighs, lap cheong, mushrooms and ginger slices on top of the rice. Pour remaining marinade over everything.', timer:'8 min'},
-      {title:'Steam finish', text:'Cover tightly and cook on the lowest heat for 20 minutes until chicken is cooked through and rice is fully done. Do not lift the lid during this time.', timer:'20 min'},
-      {title:'Serve', text:'Drizzle a little sesame oil over the top, scatter spring onions, and bring the clay pot to the table. The slightly charred rice crust at the bottom is the best part.'}
-    ],
-    notes: 'A clay pot gives the best results — the charred bottom crust (guoba) is prized. A heavy-based non-stick or cast iron pot works too. The mushroom soaking liquid adds depth to the rice, so use it all.'
-  },
-  'r9': {
-    ingredients: [
-      {amt:'400g', name:'prawns, shell-on'},
-      {amt:'3 stalks', name:'lemongrass, white part only, minced'},
-      {amt:'2 cloves', name:'garlic, minced'},
-      {amt:'1 tbsp', name:'fish sauce'},
-      {amt:'1 tsp', name:'sugar'},
-      {amt:'200g', name:'rice vermicelli (bee hoon)'},
-      {amt:'100g', name:'bean sprouts'},
-      {amt:'3', name:'limes'},
-      {amt:'2 tbsp', name:'fish sauce (nuoc cham)'},
-      {amt:'1 tbsp', name:'sugar (nuoc cham)'},
-      {amt:'1 red chilli', name:'sliced (nuoc cham)'},
-      {amt:'to serve', name:'coriander, mint, lettuce'}
-    ],
-    steps: [
-      {title:'Marinate the prawns', text:'Shell and devein prawns, leaving tails on. Mix with minced lemongrass, garlic, fish sauce and sugar. Marinate for 20 minutes.', timer:'20 min'},
-      {title:'Make nuoc cham', text:'Mix juice of 2 limes, fish sauce, sugar, sliced chilli and 2 tbsp warm water. Stir until sugar dissolves. Taste — it should be tangy, sweet, salty and a little spicy in equal measure.'},
-      {title:'Soak the noodles', text:'Soak rice vermicelli in warm water for 10 minutes until pliable. Drain, then blanch in boiling water for 1 minute. Drain and rinse with cold water.', timer:'10 min'},
-      {title:'Cook the prawns', text:'Heat a pan or grill over high heat. Cook prawns for 2 minutes per side until pink, slightly charred and cooked through. Do not overcrowd — cook in batches if needed.', timer:'4 min'},
-      {title:'Blanch the bean sprouts', text:'Quickly blanch bean sprouts in boiling water for 30 seconds. Drain.', timer:'30 sec'},
-      {title:'Assemble', text:'Place noodles in bowls. Top with bean sprouts, lemongrass prawns and fresh herbs. Serve nuoc cham on the side for dipping or pouring over as a dressing.'}
-    ],
-    notes: 'Thai holy basil and mint together are the key herb combination here. The nuoc cham is the heart of the dish — make it properly and taste as you go. Leftovers keep for 2 days in the fridge separately.'
-  },
-  'r10': {
-    ingredients: [
-      {amt:'300g', name:'thinly sliced beef (shabu-shabu cut)'},
-      {amt:'1 large', name:'yellow onion, thinly sliced'},
-      {amt:'2 cups', name:'dashi stock'},
-      {amt:'3 tbsp', name:'soy sauce'},
-      {amt:'2 tbsp', name:'mirin'},
-      {amt:'1 tbsp', name:'sake'},
-      {amt:'1 tbsp', name:'sugar'},
-      {amt:'2', name:'eggs'},
-      {amt:'2 cups', name:'Japanese short-grain rice, cooked'},
-      {amt:'2 stalks', name:'spring onion, sliced'},
-      {amt:'to serve', name:'beni shoga (pickled ginger)'}
-    ],
-    steps: [
-      {title:'Make the broth', text:'Combine dashi stock, soy sauce, mirin, sake and sugar in a wide pan or skillet. Bring to a gentle simmer over medium heat.'},
-      {title:'Cook the onion', text:'Add sliced onion to the simmering broth. Cook for 8–10 minutes until very soft and translucent, stirring occasionally.', timer:'9 min'},
-      {title:'Add the beef', text:'Lay the thinly sliced beef over the onion in a single layer. Do not stir — let it cook undisturbed for 2 minutes until just cooked through. The beef should be tender and have absorbed the broth.', timer:'2 min'},
-      {title:'Add the egg', text:'Beat eggs lightly — you want streaks, not a fully uniform mix. Pour the egg mixture over the beef in a thin stream. Cover and cook for 60–90 seconds until egg is just set but still slightly runny in the centre.', timer:'75 sec'},
-      {title:'Serve immediately', text:'Slide the beef and egg directly over a bowl of hot rice, making sure to include plenty of the sweet-savoury broth. Top with spring onion and beni shoga.'}
-    ],
-    notes: 'The egg should be just barely set — Japanese-style donburi always has a silky, almost custardy egg rather than a fully cooked one. The moment it looks 80% set, take it off the heat. It will continue cooking from residual heat. Shabu-shabu cut beef is available at Don Don Donki in Singapore.'
-  }
-};
-
-function openRecipeViewer(id) {
-  var recipes = getRecipes();
-  var r = recipes.find(function(x){ return x.id===id; });
-  if(!r) return;
-
-  document.getElementById('rv-cuisine').textContent = CUISINE_LABEL[r.cuisine] || r.cuisine;
-  document.getElementById('rv-title').textContent = r.name;
-  document.getElementById('rv-meta').innerHTML =
-    '<span class="rv-chip">'+r.time+' min</span>'
-    +'<span class="rv-chip">&nbsp;·&nbsp; '+esc(r.serves||'2')+' servings</span>'
-    +'<span class="rv-chip">&nbsp;·&nbsp; '+DIFF_LABEL[r.diff]+'</span>';
-
-  var full = FULL_RECIPES[id];
-  var body = '';
-
-  if(full) {
-    body += '<p class="rv-section-label">Ingredients</p>';
-    body += '<div class="rv-ingredients">';
-    full.ingredients.forEach(function(ing){
-      body += '<div class="rv-ing"><span class="rv-ing-amt">'+esc(ing.amt)+'</span><span>'+esc(ing.name)+'</span></div>';
-    });
-    body += '</div>';
-
-    body += '<p class="rv-section-label">Method</p>';
-    body += '<div class="rv-steps">';
-    full.steps.forEach(function(step, i){
-      body += '<div class="rv-step">'
-        +'<div class="rv-step-num">'+(i+1)+'</div>'
-        +'<div class="rv-step-body">'
-        +'<div class="rv-step-title">'+esc(step.title)+'</div>'
-        +'<div class="rv-step-text">'+esc(step.text)+'</div>'
-        +(step.timer ? '<div class="rv-timer">'+esc(step.timer)+'</div>' : '')
-        +'</div></div>';
-    });
-    body += '</div>';
-
-    if(full.notes) {
-      body += '<div class="rv-notes"><div class="rv-notes-label">Notes</div>'+esc(full.notes)+'</div>';
-    }
-  } else if(r.steps && r.steps.trim()) {
-    body += '<p class="rv-section-label">Method</p>';
-    body += '<div class="rv-user-steps">'+esc(r.steps)+'</div>';
-    if(r.ingredients && r.ingredients.trim()) {
-      body = '<p class="rv-section-label">Ingredients</p><div class="rv-user-steps" style="margin-bottom:1.25rem">'+esc(r.ingredients)+'</div>' + body;
-    }
-  } else {
-    body += '<p class="rv-no-steps">No recipe steps added yet. Edit this recipe to add ingredients and method.</p>';
-  }
-
-  document.getElementById('rv-body').innerHTML = body;
-  document.getElementById('rv-backdrop').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeRecipeViewer() {
-  document.getElementById('rv-backdrop').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('rv-backdrop').addEventListener('click', function(e){
-  if(e.target === this) closeRecipeViewer();
-});
-
-function updateHeroStats(recipes) {
+function renderRecipes(recipes) {
+  var grid = document.getElementById('recipe-grid');
   document.getElementById('stat-total').textContent = recipes.length;
   document.getElementById('stat-quick').textContent = recipes.filter(function(r){ return r.time<=30; }).length;
   document.getElementById('stat-easy').textContent = recipes.filter(function(r){ return r.diff==='easy'; }).length;
+  if (!recipes.length) {
+    grid.innerHTML='';
+    document.getElementById('empty-state').style.display='block';
+    document.getElementById('recipe-count').textContent='0 recipes';
+    return;
+  }
+  document.getElementById('empty-state').style.display='none';
+  grid.innerHTML = recipes.map(function(r, i){
+    var adminBtns = isAdmin
+      ? '<button class="action-btn admin-only" onclick="editRecipeFn(\''+r.id+'\')">Edit</button>'
+        +'<button class="action-btn del admin-only" onclick="deleteRecipeFn(\''+r.id+'\')">Delete</button>'
+      : '';
+    return '<div class="recipe-card" data-id="'+r.id+'" data-cuisine="'+(r.cuisine||'')+'" data-time="'+(r.time||99)+'" style="animation-delay:'+Math.min(i*0.04,0.4)+'s">'
+      +'<div class="card-top"><div class="card-title">'+esc(r.name)+'</div>'
+      +'<span class="cuisine-badge '+(CUISINE_CLASS[r.cuisine]||'c-other')+'">'+(CUISINE_LABEL[r.cuisine]||'Other')+'</span></div>'
+      +(r.desc?'<p class="card-desc">'+esc(r.desc)+'</p>':'')
+      +'<div class="card-meta"><span class="meta-chip">'+(r.time||'?')+' min</span><span class="meta-chip">'+(r.serves||'2')+' servings</span></div>'
+      +'<div class="card-footer"><span class="diff-badge '+(DIFF_CLASS[r.diff]||'d-easy')+'">'+(DIFF_LABEL[r.diff]||'Easy')+'</span>'
+      +'<div class="card-actions">'+adminBtns
+      +'<button class="action-btn view" onclick="openRecipeViewer(\''+r.id+'\')">View recipe</button>'
+      +'</div></div>'
+      +(r.author?'<div class="submitted-by">Added by '+esc(r.author)+'</div>':'')
+      +'</div>';
+  }).join('');
+  applyFilter(currentFilter);
 }
 
 function filterBy(type, btn) {
@@ -1261,228 +515,242 @@ function applyFilter(type) {
   var cards = document.querySelectorAll('.recipe-card');
   var visible = 0;
   cards.forEach(function(c){
-    var show = type==='all'
-      || (type==='quick' && parseInt(c.dataset.time)<=30)
-      || c.dataset.cuisine===type;
+    var show = type==='all' || (type==='quick' && parseInt(c.dataset.time)<=30) || c.dataset.cuisine===type;
     c.classList.toggle('hidden', !show);
     if(show) visible++;
   });
   document.getElementById('recipe-count').textContent = visible+(visible===1?' recipe':' recipes');
-  document.getElementById('empty-state').style.display = visible===0 && document.querySelectorAll('.recipe-card').length>0 ? 'block' : 'none';
+  document.getElementById('empty-state').style.display = (visible===0 && document.querySelectorAll('.recipe-card').length>0)?'block':'none';
+}
+
+var FULL_RECIPES = {
+  'Salmon teriyaki donburi': {
+    ingredients:[{amt:'2 fillets',name:'salmon, skin-on'},{amt:'1.5 cups',name:'Japanese short-grain rice'},{amt:'2',name:'large eggs'},{amt:'100g',name:'frozen edamame, shelled'},{amt:'1',name:'Japanese cucumber'},{amt:'3 tbsp',name:'soy sauce'},{amt:'2 tbsp',name:'mirin'},{amt:'2 tbsp',name:'sake'},{amt:'1 tbsp',name:'sugar'},{amt:'2 tbsp',name:'rice vinegar'},{amt:'½ tsp',name:'salt'},{amt:'1 tbsp',name:'neutral oil'},{amt:'1 tsp',name:'toasted sesame seeds'},{amt:'2',name:'spring onions, sliced'}],
+    steps:[{title:'Cook the rice',text:'Rinse rice until water runs clear. Cook per packet. Keep warm.'},{title:'Soft-boil the eggs',text:'Boil water, lower eggs, cook exactly 7 minutes. Ice bath immediately. Peel when ready.',timer:'7 min'},{title:'Pickle the cucumber',text:'Slice thinly (~3mm). Toss with rice vinegar and salt. Set aside 10 minutes.',timer:'10 min'},{title:'Make the teriyaki sauce',text:'Combine soy, mirin, sake and sugar. Simmer 3–4 min until slightly thickened and glossy.',timer:'4 min'},{title:'Sear the salmon',text:'Pat salmon very dry. Heat oil over medium-high. Skin-side down, press 30 seconds. 4 min skin side, 2 min flesh side.',timer:'6 min'},{title:'Glaze',text:'Reduce heat. Pour sauce over, spoon over fillets as it bubbles. 1 min until glossy.',timer:'1 min'},{title:'Assemble',text:'Rice in bowls, salmon on top, arrange cucumber, edamame and egg. Spoon remaining sauce over rice. Finish with sesame and spring onion.'}],
+    notes:'Pat salmon very dry — moisture is the enemy of a crispy skin. Pour leftover pan sauce over the rice, not the salmon, to keep the skin crisp at the table.'
+  },
+  'Lu rou fan (braised pork rice)': {
+    ingredients:[{amt:'500g',name:'pork belly, 2cm cubes'},{amt:'4 tbsp',name:'soy sauce'},{amt:'2 tbsp',name:'dark soy sauce'},{amt:'2 tbsp',name:'Shaoxing wine'},{amt:'1 tbsp',name:'sugar'},{amt:'1 tsp',name:'five spice powder'},{amt:'3',name:'star anise'},{amt:'4 cloves',name:'garlic, smashed'},{amt:'2 cups',name:'water'},{amt:'4',name:'eggs'},{amt:'2 cups',name:'rice, cooked'},{amt:'to taste',name:'pickled mustard greens'}],
+    steps:[{title:'Brown the pork',text:'Sear pork belly until lightly browned all over, about 5 minutes.',timer:'5 min'},{title:'Caramelise',text:'Add sugar to same pot, let it caramelise to light amber. Add garlic, stir 30 seconds. Return pork.'},{title:'Add liquids',text:'Add soy sauces, Shaoxing wine, five spice, star anise and water. Stir well.'},{title:'Braise',text:'Bring to a boil, reduce to lowest simmer. Cover and cook 60 minutes.',timer:'60 min'},{title:'Add eggs',text:'After 20 minutes, add peeled soft-boiled eggs to braise for remaining 40 minutes, turning occasionally.'},{title:'Serve',text:'Spoon pork and sauce over rice. Halve a braised egg alongside. Add pickled mustard greens.'}],
+    notes:'This dish deepens overnight. Make extra and reheat the next day — the braising liquid freezes well too.'
+  },
+  'Thai green curry with chicken': {
+    ingredients:[{amt:'500g',name:'chicken thighs, boneless'},{amt:'3 tbsp',name:'green curry paste (Mae Ploy)'},{amt:'400ml',name:'coconut milk'},{amt:'200g',name:'Thai eggplant, quartered'},{amt:'6',name:'kaffir lime leaves, torn'},{amt:'2 tbsp',name:'fish sauce'},{amt:'1 tsp',name:'sugar'},{amt:'1 handful',name:'Thai basil leaves'},{amt:'2 cups',name:'jasmine rice, cooked'},{amt:'1',name:'red chilli, sliced'}],
+    steps:[{title:'Fry the paste',text:'Heat oil over medium. Fry curry paste 2 minutes until fragrant.',timer:'2 min'},{title:'Add coconut milk',text:'Pour in half the coconut milk. Stir well and bring to a simmer.'},{title:'Cook chicken',text:'Add chicken thighs. Simmer 10 minutes.',timer:'10 min'},{title:'Add vegetables',text:'Add Thai eggplant, kaffir lime leaves and remaining coconut milk. Season with fish sauce and sugar.'},{title:'Simmer',text:'Cook another 10 minutes until eggplant is tender.',timer:'10 min'},{title:'Finish',text:'Remove from heat. Stir through Thai basil. Serve over jasmine rice.'}],
+    notes:'Mae Ploy is spicier than Maesri — use 2 tbsp for milder heat. Thai eggplant is at Mustafa or wet markets.'
+  },
+  'Cantonese steamed fish': {
+    ingredients:[{amt:'1 whole',name:'sea bass or batang (~450g)'},{amt:'40g',name:'ginger, julienned'},{amt:'4',name:'spring onions, julienned'},{amt:'4 sprigs',name:'coriander'},{amt:'3 tbsp',name:'light soy sauce'},{amt:'1 tbsp',name:'Shaoxing wine'},{amt:'½ tsp',name:'sugar'},{amt:'3 tbsp',name:'neutral oil'},{amt:'1 tsp',name:'sesame oil'},{amt:'1 pinch',name:'white pepper'}],
+    steps:[{title:'Prep the fish',text:'Score 3 diagonal cuts each side to the bone. Rub with salt and white pepper. Stuff half the ginger in the cavity.'},{title:'Set up steamer',text:'Boil 5cm water in wok. Place fish on heatproof plate on a rack above the water.'},{title:'Steam',text:'Steam 8–10 minutes until flesh flakes at thickest point.',timer:'9 min'},{title:'Make the sauce',text:'Mix soy sauce, Shaoxing wine, sugar and sesame oil.'},{title:'Drain',text:'Remove plate. Tip away all pooled liquid — it is bitter and will dilute the sauce.'},{title:'Add toppings',text:'Lay spring onions and coriander over the fish. Pour soy mixture evenly over.'},{title:'Hot oil finish',text:'Heat neutral oil until just smoking. Pour directly over spring onions — it will sizzle loudly. Serve immediately.',timer:'2 min'}],
+    notes:'Buy the fish day-of. The oil MUST be smoking or the aromatics won\'t bloom. Ask your wet market fishmonger to clean and score it.'
+  },
+  'Miso ramen with chashu pork': {
+    ingredients:[{amt:'300g',name:'pork belly (for chashu)'},{amt:'2 portions',name:'ramen noodles'},{amt:'4 cups',name:'chicken or pork stock'},{amt:'3 tbsp',name:'white miso paste'},{amt:'1 tbsp',name:'soy sauce'},{amt:'1 tsp',name:'sesame oil'},{amt:'2 tsp',name:'mirin'},{amt:'2',name:'soft-boiled eggs'},{amt:'2 sheets',name:'nori'},{amt:'2 stalks',name:'spring onion'},{amt:'to serve',name:'baby bok choy, blanched'}],
+    steps:[{title:'Make chashu',text:'Roll pork belly, tie with twine. Sear all over. Braise in soy, mirin, sake and water 90 minutes.',timer:'90 min'},{title:'Marinate eggs',text:'Soft-boil 7 minutes. Peel and soak in cooled chashu liquid overnight.',timer:'7 min'},{title:'Build miso broth',text:'Heat stock to just below boiling. Dissolve miso in a ladleful of hot stock, stir back in. Add soy, mirin, sesame oil. Do not boil after adding miso.'},{title:'Cook noodles',text:'Cook ramen per packet instructions.',timer:'3 min'},{title:'Blanch bok choy',text:'Blanch in same water 90 seconds.',timer:'90 sec'},{title:'Assemble',text:'Noodles in deep bowls, ladle over broth. Arrange chashu slices, halved egg, bok choy and nori. Finish with spring onion.'}],
+    notes:'Chashu and marinated eggs improve overnight — make them the day before. Never boil the broth after adding miso.'
+  },
+  'Pad kra pao (Thai basil pork)': {
+    ingredients:[{amt:'400g',name:'minced pork'},{amt:'1 large handful',name:'Thai holy basil leaves'},{amt:'4 cloves',name:'garlic, minced'},{amt:'4–6',name:'red and green chillies, sliced'},{amt:'2 tbsp',name:'oyster sauce'},{amt:'1 tbsp',name:'fish sauce'},{amt:'1 tbsp',name:'soy sauce'},{amt:'1 tsp',name:'sugar'},{amt:'2',name:'eggs (for frying)'},{amt:'2 cups',name:'jasmine rice, cooked'}],
+    steps:[{title:'Prep sauce',text:'Mix oyster sauce, fish sauce, soy sauce and sugar.'},{title:'Fry aromatics',text:'Heat wok over very high heat until smoking. Add garlic and chillies, stir-fry 30 seconds.'},{title:'Cook pork',text:'Add minced pork, break up quickly. Stir-fry over high heat 3–4 minutes.',timer:'4 min'},{title:'Add sauce',text:'Pour sauce over pork, toss to coat, 30 seconds until glossy.'},{title:'Add basil',text:'Remove from heat. Fold in Thai basil — residual heat wilts it perfectly.'},{title:'Fry eggs',text:'Separate pan, oil smoking hot. Fry eggs until edges are crispy, yolk still runny, ~90 seconds.',timer:'90 sec'},{title:'Serve',text:'Rice in bowl, top with pork, crown with crispy fried egg.'}],
+    notes:'Thai holy basil (bai krapao) is essential — find it at Mustafa or wet markets. A smoking hot wok is non-negotiable for wok hei.'
+  },
+  'Taiwanese beef noodle soup': {
+    ingredients:[{amt:'500g',name:'beef shank, large chunks'},{amt:'4 tbsp',name:'soy sauce'},{amt:'2 tbsp',name:'dark soy sauce'},{amt:'2 tbsp',name:'Shaoxing wine'},{amt:'1 tbsp',name:'doubanjiang'},{amt:'3',name:'star anise'},{amt:'1 stick',name:'cinnamon'},{amt:'4 cloves',name:'garlic'},{amt:'1',name:'onion, quartered'},{amt:'4 cups',name:'water or beef stock'},{amt:'2 portions',name:'wide noodles'},{amt:'to serve',name:'bean sprouts, chilli oil, spring onion'}],
+    steps:[{title:'Brown beef',text:'Season beef with salt. Sear in batches until deep brown all over.',timer:'8 min'},{title:'Fry aromatics',text:'In same pot, fry onion, garlic and doubanjiang 2 minutes.'},{title:'Build broth',text:'Return beef. Add soy sauces, Shaoxing wine, spices and stock. Bring to a boil.'},{title:'Long braise',text:'Reduce to lowest simmer, cover and cook 90 minutes.',timer:'90 min'},{title:'Cook noodles',text:'Cook noodles in boiling salted water per packet.'},{title:'Assemble',text:'Noodles in deep bowls, ladle over broth, arrange beef on top. Add bean sprouts, chilli oil and spring onion.'}],
+    notes:'Start at least 2 hours before eating. Even better the next day.'
+  },
+  'Cantonese clay pot chicken rice': {
+    ingredients:[{amt:'4',name:'chicken thighs, bone-in'},{amt:'2 links',name:'lap cheong, sliced'},{amt:'6',name:'dried shiitake mushrooms, soaked'},{amt:'1.5 cups',name:'jasmine rice, rinsed'},{amt:'2 tbsp',name:'soy sauce'},{amt:'1 tbsp',name:'dark soy sauce'},{amt:'1 tbsp',name:'oyster sauce'},{amt:'1 tbsp',name:'Shaoxing wine'},{amt:'1 tsp',name:'sesame oil'},{amt:'1 tsp',name:'sugar'},{amt:'4 slices',name:'fresh ginger'},{amt:'2 stalks',name:'spring onion'}],
+    steps:[{title:'Soak mushrooms',text:'Soak dried shiitake in warm water 30 minutes. Squeeze out, halve. Reserve soaking liquid.',timer:'30 min'},{title:'Marinate chicken',text:'Mix soy sauces, oyster sauce, Shaoxing wine, sesame oil and sugar. Coat chicken and marinate 20 minutes.',timer:'20 min'},{title:'Cook rice',text:'Place rinsed rice in clay pot. Add mushroom soaking liquid topped to normal water level. Bring to boil, reduce to low.'},{title:'Add toppings',text:'Once water mostly absorbed (~8 min), arrange chicken, lap cheong, mushrooms and ginger on top. Pour remaining marinade over.',timer:'8 min'},{title:'Steam finish',text:'Cover tightly, cook on lowest heat 20 minutes. Do not lift lid.',timer:'20 min'},{title:'Serve',text:'Drizzle sesame oil, scatter spring onions. Bring clay pot to the table — the charred rice crust at the bottom is the best part.'}],
+    notes:'Use the mushroom soaking liquid in the rice for depth. A clay pot gives the best results — the charred guoba at the bottom is prized.'
+  },
+  'Vietnamese lemongrass prawn vermicelli': {
+    ingredients:[{amt:'400g',name:'prawns, shell-on'},{amt:'3 stalks',name:'lemongrass, white part, minced'},{amt:'2 cloves',name:'garlic, minced'},{amt:'1 tbsp',name:'fish sauce'},{amt:'1 tsp',name:'sugar'},{amt:'200g',name:'rice vermicelli (bee hoon)'},{amt:'100g',name:'bean sprouts'},{amt:'3',name:'limes'},{amt:'2 tbsp',name:'fish sauce (nuoc cham)'},{amt:'1 tbsp',name:'sugar (nuoc cham)'},{amt:'1',name:'red chilli, sliced'},{amt:'to serve',name:'coriander, mint, lettuce'}],
+    steps:[{title:'Marinate prawns',text:'Shell and devein prawns. Mix with lemongrass, garlic, fish sauce and sugar. Marinate 20 minutes.',timer:'20 min'},{title:'Make nuoc cham',text:'Mix lime juice, fish sauce, sugar, chilli and 2 tbsp warm water. Taste — should be tangy, sweet, salty, a little spicy.'},{title:'Soak noodles',text:'Soak bee hoon in warm water 10 minutes. Blanch 1 minute in boiling water. Drain and rinse cold.',timer:'10 min'},{title:'Cook prawns',text:'Grill or pan-fry over high heat 2 minutes per side until pink and slightly charred.',timer:'4 min'},{title:'Blanch bean sprouts',text:'30 seconds in boiling water. Drain.',timer:'30 sec'},{title:'Assemble',text:'Noodles in bowls, top with bean sprouts, prawns and fresh herbs. Nuoc cham on the side.'}],
+    notes:'The nuoc cham is the heart of the dish — taste and adjust as you go. Serve immediately once assembled.'
+  },
+  'Gyudon (Japanese beef rice bowl)': {
+    ingredients:[{amt:'300g',name:'thinly sliced beef (shabu-shabu cut)'},{amt:'1 large',name:'yellow onion, thinly sliced'},{amt:'2 cups',name:'dashi stock'},{amt:'3 tbsp',name:'soy sauce'},{amt:'2 tbsp',name:'mirin'},{amt:'1 tbsp',name:'sake'},{amt:'1 tbsp',name:'sugar'},{amt:'2',name:'eggs'},{amt:'2 cups',name:'Japanese short-grain rice, cooked'},{amt:'2 stalks',name:'spring onion'},{amt:'to serve',name:'beni shoga (pickled ginger)'}],
+    steps:[{title:'Build broth',text:'Combine dashi, soy sauce, mirin, sake and sugar in a wide pan. Bring to a gentle simmer.'},{title:'Cook onion',text:'Add sliced onion. Cook 8–10 minutes until very soft.',timer:'9 min'},{title:'Add beef',text:'Lay sliced beef over onion. Do not stir. Cook 2 minutes undisturbed.',timer:'2 min'},{title:'Add egg',text:'Beat eggs lightly (keep some streaks). Pour in a thin stream. Cover and cook 60–90 seconds until just set but still silky.',timer:'75 sec'},{title:'Serve',text:'Slide beef and egg over hot rice. Include plenty of broth. Top with spring onion and beni shoga.'}],
+    notes:'The egg should be 80% set — take it off heat the moment it looks almost done. It finishes from residual heat. Shabu-shabu beef is at Don Don Donki.'
+  }
+};
+
+function openRecipeViewer(id) {
+  var r = allRecipes.find(function(x){ return x.id===id; });
+  if(!r) return;
+  document.getElementById('rv-cuisine').textContent = CUISINE_LABEL[r.cuisine]||r.cuisine;
+  document.getElementById('rv-title').textContent = r.name;
+  document.getElementById('rv-meta').innerHTML = '<span class="rv-chip">'+(r.time||'?')+' min</span><span class="rv-chip">&nbsp;·&nbsp; '+(r.serves||'2')+' servings</span><span class="rv-chip">&nbsp;·&nbsp; '+(DIFF_LABEL[r.diff]||'Easy')+'</span>';
+  var full = FULL_RECIPES[r.name];
+  var body = '';
+  if(full) {
+    body += '<p class="rv-section-label">Ingredients</p><div class="rv-ingredients">';
+    full.ingredients.forEach(function(ing){ body+='<div class="rv-ing"><span class="rv-ing-amt">'+esc(ing.amt)+'</span><span>'+esc(ing.name)+'</span></div>'; });
+    body += '</div><p class="rv-section-label">Method</p><div class="rv-steps">';
+    full.steps.forEach(function(s,i){ body+='<div class="rv-step"><div class="rv-step-num">'+(i+1)+'</div><div class="rv-step-body"><div class="rv-step-title">'+esc(s.title)+'</div><div class="rv-step-text">'+esc(s.text)+'</div>'+(s.timer?'<div class="rv-timer">'+esc(s.timer)+'</div>':'')+'</div></div>'; });
+    body += '</div>';
+    if(full.notes) body+='<div class="rv-notes"><div class="rv-notes-label">Notes</div>'+esc(full.notes)+'</div>';
+  } else if(r.steps && r.steps.trim()) {
+    if(r.ingredients&&r.ingredients.trim()) body+='<p class="rv-section-label">Ingredients</p><div class="rv-user-steps" style="margin-bottom:1.25rem">'+esc(r.ingredients)+'</div>';
+    body+='<p class="rv-section-label">Method</p><div class="rv-user-steps">'+esc(r.steps)+'</div>';
+  } else {
+    body+='<p class="rv-no-steps">No recipe steps added yet.</p>';
+  }
+  document.getElementById('rv-body').innerHTML=body;
+  document.getElementById('rv-backdrop').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeRecipeViewer() {
+  document.getElementById('rv-backdrop').classList.remove('open');
+  document.body.style.overflow='';
 }
 
 function openAddRecipe() {
-  editRecipeId = null;
-  document.getElementById('recipe-modal-title').textContent = 'Add a recipe';
-  document.getElementById('f-name').value='';
-  document.getElementById('f-desc').value='';
+  if(!isAdmin) return;
+  editRecipeId=null;
+  document.getElementById('recipe-modal-title').textContent='Add a recipe';
+  ['f-name','f-desc','f-time','f-serves','f-author','f-ingredients','f-steps'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('f-cuisine').value='jp';
-  document.getElementById('f-time').value='';
   document.getElementById('f-diff').value='easy';
-  document.getElementById('f-serves').value='2';
-  document.getElementById('f-author').value='';
-  document.getElementById('f-ingredients').value='';
-  document.getElementById('f-steps').value='';
   document.getElementById('recipe-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('f-name').focus(); }, 100);
+  setTimeout(function(){ document.getElementById('f-name').focus(); },100);
 }
 
 function editRecipeFn(id) {
-  var r = getRecipes().find(function(x){ return x.id===id; });
+  if(!isAdmin) return;
+  var r=allRecipes.find(function(x){ return x.id===id; });
   if(!r) return;
-  editRecipeId = id;
-  document.getElementById('recipe-modal-title').textContent = 'Edit recipe';
-  document.getElementById('f-name').value = r.name;
-  document.getElementById('f-desc').value = r.desc||'';
-  document.getElementById('f-cuisine').value = r.cuisine;
-  document.getElementById('f-time').value = r.time;
-  document.getElementById('f-diff').value = r.diff;
-  document.getElementById('f-serves').value = r.serves||'2';
-  document.getElementById('f-author').value = r.author||'';
-  document.getElementById('f-ingredients').value = r.ingredients||'';
-  document.getElementById('f-steps').value = r.steps||'';
+  editRecipeId=id;
+  document.getElementById('recipe-modal-title').textContent='Edit recipe';
+  document.getElementById('f-name').value=r.name||'';
+  document.getElementById('f-desc').value=r.desc||'';
+  document.getElementById('f-cuisine').value=r.cuisine||'jp';
+  document.getElementById('f-time').value=r.time||'';
+  document.getElementById('f-diff').value=r.diff||'easy';
+  document.getElementById('f-serves').value=r.serves||'2';
+  document.getElementById('f-author').value=r.author||'';
+  document.getElementById('f-ingredients').value=r.ingredients||'';
+  document.getElementById('f-steps').value=r.steps||'';
   document.getElementById('recipe-modal').classList.add('open');
 }
 
 function closeRecipeModal() { document.getElementById('recipe-modal').classList.remove('open'); }
 
 function saveRecipe() {
-  var name = document.getElementById('f-name').value.trim();
-  if(!name) { document.getElementById('f-name').focus(); return; }
-  var recipes = getRecipes();
-  var item = {
-    id: editRecipeId || uid(),
-    name: name,
-    desc: document.getElementById('f-desc').value.trim(),
-    cuisine: document.getElementById('f-cuisine').value,
-    time: parseInt(document.getElementById('f-time').value)||30,
-    diff: document.getElementById('f-diff').value,
-    serves: document.getElementById('f-serves').value.trim()||'2',
-    author: document.getElementById('f-author').value.trim()||'Anonymous',
-    ingredients: document.getElementById('f-ingredients').value.trim(),
-    steps: document.getElementById('f-steps').value.trim()
-  };
-  if(editRecipeId) {
-    var idx = recipes.findIndex(function(r){ return r.id===editRecipeId; });
-    if(idx>-1) recipes[idx]=item; else recipes.push(item);
-  } else { recipes.push(item); }
-  setRecipes(recipes);
-  renderRecipes();
-  closeRecipeModal();
-  showToast(editRecipeId ? 'Recipe updated' : 'Recipe added!');
+  if(!isAdmin) return;
+  var name=document.getElementById('f-name').value.trim();
+  if(!name){ document.getElementById('f-name').focus(); return; }
+  var row={name:name,desc:document.getElementById('f-desc').value.trim(),cuisine:document.getElementById('f-cuisine').value,time:parseInt(document.getElementById('f-time').value)||30,diff:document.getElementById('f-diff').value,serves:document.getElementById('f-serves').value.trim()||'2',author:document.getElementById('f-author').value.trim()||'KKB',ingredients:document.getElementById('f-ingredients').value.trim(),steps:document.getElementById('f-steps').value.trim()};
+  var p=editRecipeId?dbUpdate('recipes',editRecipeId,row):dbInsert('recipes',row);
+  p.then(function(){ closeRecipeModal(); showToast(editRecipeId?'Recipe updated':'Recipe added!'); loadRecipes(); }).catch(function(e){ showToast('Error: '+e.message); });
 }
 
 function deleteRecipeFn(id) {
-  if(!confirm('Delete this recipe?')) return;
-  var recipes = getRecipes().filter(function(r){ return r.id!==id; });
-  setRecipes(recipes);
-  renderRecipes();
-  showToast('Recipe deleted');
+  if(!isAdmin) return;
+  if(!confirm('Delete this recipe from the database? This cannot be undone.')) return;
+  dbDelete('recipes',id).then(function(){ showToast('Recipe deleted'); loadRecipes(); }).catch(function(e){ showToast('Error: '+e.message); });
 }
 
-// ── Pantry ───────────────────────────────────────────────────────
-function renderPantry() {
-  var pantry = getPantry();
-  var grouped = {};
-  pantry.forEach(function(p){
-    var cat = CAT_ORDER.indexOf(p.cat)>-1 ? p.cat : 'Other';
-    if(!grouped[cat]) grouped[cat]=[];
-    grouped[cat].push(p);
-  });
-  var html = '';
-  var allCats = CAT_ORDER.filter(function(c){ return grouped[c]&&grouped[c].length; });
-  allCats.forEach(function(cat){
-    html += '<div class="pantry-section"><p class="pantry-sec-label">'+esc(cat)+'</p>';
+function loadPantry() {
+  document.getElementById('pantry-body').innerHTML='<div class="loading-state"><div class="loading-spinner"></div><p>Loading pantry…</p></div>';
+  dbGet('pantry').then(function(data){ renderPantry(data||[]); }).catch(function(e){ document.getElementById('pantry-body').innerHTML='<div class="empty-state"><div class="big">Could not connect</div>'+esc(e.message)+'</div>'; });
+}
+
+function renderPantry(pantry) {
+  var grouped={};
+  pantry.forEach(function(p){ var cat=CAT_ORDER.indexOf(p.cat)>-1?p.cat:'Other'; if(!grouped[cat])grouped[cat]=[]; grouped[cat].push(p); });
+  var html='';
+  CAT_ORDER.forEach(function(cat){
+    if(!grouped[cat]||!grouped[cat].length) return;
+    html+='<div class="pantry-section"><p class="pantry-sec-label">'+esc(cat)+'</p>';
     grouped[cat].forEach(function(p){
-      html += '<div class="pantry-row" data-id="'+p.id+'">'
-        +'<div><div class="pantry-name">'+esc(p.name)+'</div>'+(p.note?'<div class="pantry-note">'+esc(p.note)+'</div>':'')+'</div>'
-        +'<span class="pantry-uses">'+esc(p.uses||'')+'</span>'
-        +'<button class="status-btn '+STATUS_CLASS[p.status]+'" onclick="cycleStatus(this,\''+p.id+'\')">'+STATUS_LABEL[p.status]+'</button>'
-        +'<button class="del-pantry" title="Remove" onclick="deletePantryFn(\''+p.id+'\')">×</button>'
-        +'</div>';
+      var delBtn=isAdmin?'<button class="del-pantry" title="Remove" onclick="deletePantryFn(\''+p.id+'\')">&#x2715;</button>':'<span></span>';
+      html+='<div class="pantry-row"><div><div class="pantry-name">'+esc(p.name)+'</div>'+(p.note?'<div class="pantry-note">'+esc(p.note)+'</div>':'')+'</div><span class="pantry-uses">'+esc(p.uses||'')+'</span><button class="status-btn '+STATUS_CLASS[p.status||'stocked']+'" onclick="cycleStatus(this,\''+p.id+'\',\''+p.status+'\')">'+STATUS_LABEL[p.status||'stocked']+'</button>'+delBtn+'</div>';
     });
-    html += '</div>';
+    html+='</div>';
   });
-  if(!html) html='<div class="empty-state"><div class="big">Nothing here yet</div>Add your first pantry item.</div>';
-  document.getElementById('pantry-body').innerHTML = html;
+  if(!html) html='<div class="empty-state"><div class="big">Nothing here yet</div>'+(isAdmin?'Add your first pantry item.':'')+'</div>';
+  document.getElementById('pantry-body').innerHTML=html;
   updatePantryStats(pantry);
-  if(shopVisible) buildShopList(pantry);
 }
 
 function updatePantryStats(pantry) {
   var c={stocked:0,low:0,out:0};
-  pantry.forEach(function(p){ c[p.status]++; });
-  document.getElementById('pt-stocked').textContent = c.stocked+' stocked';
-  document.getElementById('pt-low').textContent = c.low+' low';
-  document.getElementById('pt-out').textContent = c.out+' out';
+  pantry.forEach(function(p){ c[p.status||'stocked']++; });
+  document.getElementById('pt-stocked').textContent=c.stocked+' stocked';
+  document.getElementById('pt-low').textContent=c.low+' low';
+  document.getElementById('pt-out').textContent=c.out+' out';
 }
 
-function cycleStatus(btn, id) {
-  var pantry = getPantry();
-  var item = pantry.find(function(p){ return p.id===id; });
-  if(!item) return;
-  var cur = STATUS_CYCLE.indexOf(item.status);
-  if(cur === -1) cur = 0;
-  var next = STATUS_CYCLE[(cur+1)%3];
-  item.status = next;
-  btn.textContent = STATUS_LABEL[next];
-  btn.className = 'status-btn '+STATUS_CLASS[next];
-  setPantry(pantry);
-  updatePantryStats(pantry);
-  if(shopVisible) buildShopList(pantry);
+function cycleStatus(btn,id,currentStatus) {
+  var cur=STATUS_CYCLE.indexOf(currentStatus||'stocked');
+  if(cur===-1) cur=0;
+  var next=STATUS_CYCLE[(cur+1)%3];
+  btn.textContent=STATUS_LABEL[next];
+  btn.className='status-btn '+STATUS_CLASS[next];
+  btn.setAttribute('onclick','cycleStatus(this,\''+id+'\',\''+next+'\')');
+  dbUpdate('pantry',id,{status:next}).then(function(){
+    dbGet('pantry').then(function(data){ updatePantryStats(data||[]); if(shopVisible) buildShopList(data||[]); });
+  }).catch(function(e){ showToast('Error: '+e.message); });
 }
 
 function toggleShopList() {
-  shopVisible = !shopVisible;
-  var box = document.getElementById('shoplist');
-  box.classList.toggle('visible', shopVisible);
-  if(shopVisible) buildShopList(getPantry());
+  shopVisible=!shopVisible;
+  var box=document.getElementById('shoplist');
+  box.classList.toggle('visible',shopVisible);
+  if(shopVisible) dbGet('pantry').then(function(data){ buildShopList(data||[]); });
   else box.classList.remove('visible');
 }
 
 function buildShopList(pantry) {
-  var items = pantry.filter(function(p){ return p.status!=='stocked'; });
-  var el = document.getElementById('shoplist-items');
-  if(!items.length) { el.innerHTML='<p style="font-size:13px;color:var(--ink3);font-style:italic">All stocked — nothing to top up!</p>'; return; }
-  el.innerHTML = items.map(function(p){
-    var badge = p.status==='out'
-      ? '<span class="sbadge sb-out">Out</span>'
-      : '<span class="sbadge sb-low">Low</span>';
-    return '<div class="shop-row">'+badge+' '+esc(p.name)+(p.note?'<span style="font-size:11px;color:var(--ink3)">'+esc(p.note)+'</span>':'')+'</div>';
-  }).join('');
+  var items=pantry.filter(function(p){ return p.status!=='stocked'; });
+  var el=document.getElementById('shoplist-items');
+  if(!items.length){ el.innerHTML='<p style="font-size:13px;color:var(--ink3);font-style:italic">All stocked — nothing to top up!</p>'; return; }
+  el.innerHTML=items.map(function(p){ var b=p.status==='out'?'<span class="sbadge sb-out">Out</span>':'<span class="sbadge sb-low">Low</span>'; return '<div class="shop-row">'+b+' '+esc(p.name)+(p.note?'<span style="font-size:11px;color:var(--ink3);margin-left:6px">'+esc(p.note)+'</span>':'')+'</div>'; }).join('');
 }
 
 function openAddPantry() {
-  editPantryId = null;
-  document.getElementById('pantry-modal-title').textContent = 'Add pantry item';
-  document.getElementById('p-name').value='';
-  document.getElementById('p-note').value='';
+  if(!isAdmin) return;
+  editPantryId=null;
+  document.getElementById('pantry-modal-title').textContent='Add pantry item';
+  ['p-name','p-note','p-uses'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('p-cat').value='Sauces & liquid seasonings';
-  document.getElementById('p-uses').value='';
   document.getElementById('p-status').value='stocked';
   document.getElementById('pantry-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('p-name').focus(); }, 100);
+  setTimeout(function(){ document.getElementById('p-name').focus(); },100);
 }
 
 function closePantryModal() { document.getElementById('pantry-modal').classList.remove('open'); }
 
 function savePantryItem() {
-  var name = document.getElementById('p-name').value.trim();
-  if(!name) { document.getElementById('p-name').focus(); return; }
-  var pantry = getPantry();
-  var item = {
-    id: editPantryId || uid(),
-    name: name,
-    note: document.getElementById('p-note').value.trim(),
-    cat: document.getElementById('p-cat').value,
-    uses: document.getElementById('p-uses').value.trim(),
-    status: document.getElementById('p-status').value
-  };
-  if(editPantryId) {
-    var idx = pantry.findIndex(function(p){ return p.id===editPantryId; });
-    if(idx>-1) pantry[idx]=item; else pantry.push(item);
-  } else { pantry.push(item); }
-  setPantry(pantry);
-  renderPantry();
-  closePantryModal();
-  showToast('Pantry updated');
+  if(!isAdmin) return;
+  var name=document.getElementById('p-name').value.trim();
+  if(!name){ document.getElementById('p-name').focus(); return; }
+  var row={name:name,note:document.getElementById('p-note').value.trim(),cat:document.getElementById('p-cat').value,uses:document.getElementById('p-uses').value.trim(),status:document.getElementById('p-status').value};
+  var p=editPantryId?dbUpdate('pantry',editPantryId,row):dbInsert('pantry',row);
+  p.then(function(){ closePantryModal(); showToast('Pantry updated'); loadPantry(); }).catch(function(e){ showToast('Error: '+e.message); });
 }
 
 function deletePantryFn(id) {
-  setPantry(getPantry().filter(function(p){ return p.id!==id; }));
-  renderPantry();
-  showToast('Item removed');
+  if(!isAdmin) return;
+  dbDelete('pantry',id).then(function(){ showToast('Item removed'); loadPantry(); }).catch(function(e){ showToast('Error: '+e.message); });
 }
 
-// ── Helpers ──────────────────────────────────────────────────────
-function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); },2400);
 }
 
-// Close modals on backdrop click
-document.querySelectorAll('.modal-backdrop').forEach(function(bd){
-  bd.addEventListener('click', function(e){
-    if(e.target===bd) {
-      bd.classList.remove('open');
-    }
-  });
-});
+document.querySelectorAll('.modal-backdrop').forEach(function(bd){ bd.addEventListener('click',function(e){ if(e.target===bd) bd.classList.remove('open'); }); });
+document.getElementById('rv-backdrop').addEventListener('click',function(e){ if(e.target===this) closeRecipeViewer(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ document.querySelectorAll('.modal-backdrop.open').forEach(function(m){ m.classList.remove('open'); }); closeRecipeViewer(); } });
 
-// Close modals on Escape
-document.addEventListener('keydown', function(e){
-  if(e.key==='Escape') {
-    document.querySelectorAll('.modal-backdrop.open').forEach(function(m){ m.classList.remove('open'); });
-  }
-});
-
-// ── Init ─────────────────────────────────────────────────────────
-renderRecipes();
+loadRecipes();
 </script>
 </body>
 </html>
