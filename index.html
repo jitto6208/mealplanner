@@ -386,6 +386,142 @@ header {
 .sb-low { background: #fdf4e0; color: #6b4400; }
 .sb-out { background: #fdeee8; color: #7a2010; }
 
+/* ── Recipe viewer modal ── */
+.rv-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,17,8,0.55);
+  z-index: 200;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+.rv-backdrop.open { display: flex; }
+.rv-modal {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  width: 100%;
+  max-width: 580px;
+  animation: fadeUp .2s ease both;
+  overflow: hidden;
+  margin: auto;
+}
+.rv-header {
+  background: var(--ink);
+  padding: 1.5rem 1.75rem 1.25rem;
+  position: relative;
+}
+.rv-cuisine {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #e87a4a;
+  margin-bottom: .4rem;
+}
+.rv-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: .75rem;
+}
+.rv-meta { display: flex; gap: 14px; flex-wrap: wrap; }
+.rv-chip { font-size: 11px; color: rgba(250,247,242,0.5); }
+.rv-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(250,247,242,0.6);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+.rv-close:hover { background: rgba(255,255,255,0.1); color: var(--cream); }
+.rv-body { padding: 1.5rem 1.75rem; }
+.rv-section-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: .75rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--border);
+}
+.rv-ingredients {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  margin-bottom: 1.5rem;
+}
+.rv-ing {
+  font-size: 13px;
+  color: var(--ink2);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+}
+.rv-ing-amt { color: var(--ink3); white-space: nowrap; flex-shrink: 0; }
+.rv-steps { margin-bottom: 1.25rem; }
+.rv-step { display: flex; gap: 14px; margin-bottom: 1.1rem; }
+.rv-step:last-child { margin-bottom: 0; }
+.rv-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.rv-step-body { flex: 1; }
+.rv-step-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.rv-step-text { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+.rv-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+.rv-notes {
+  background: var(--surface2);
+  border-radius: var(--r);
+  padding: .85rem 1rem;
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.65;
+  margin-top: 1rem;
+}
+.rv-notes-label { font-weight: 500; color: var(--ink); margin-bottom: .25rem; font-size: 12px; }
+.rv-user-steps { font-size: 13px; color: var(--ink2); line-height: 1.7; white-space: pre-wrap; }
+.rv-no-steps { font-size: 13px; color: var(--ink3); font-style: italic; padding: .5rem 0; }
+
 /* ── Modal ── */
 .modal-backdrop {
   display: none;
@@ -582,6 +718,19 @@ header {
   </div>
 </div>
 
+<!-- Recipe Viewer Modal -->
+<div class="rv-backdrop" id="rv-backdrop">
+  <div class="rv-modal">
+    <div class="rv-header">
+      <div class="rv-cuisine" id="rv-cuisine"></div>
+      <div class="rv-title" id="rv-title"></div>
+      <div class="rv-meta" id="rv-meta"></div>
+      <button class="rv-close" onclick="closeRecipeViewer()">&#x2715;</button>
+    </div>
+    <div class="rv-body" id="rv-body"></div>
+  </div>
+</div>
+
 <!-- Recipe Modal -->
 <div class="modal-backdrop" id="recipe-modal">
   <div class="modal">
@@ -613,6 +762,8 @@ header {
       <div class="field"><label>Servings</label><input id="f-serves" placeholder="e.g. 2"></div>
     </div>
     <div class="field"><label>Your name (optional)</label><input id="f-author" placeholder="e.g. Jian"></div>
+    <div class="field"><label>Ingredients (one per line)</label><textarea id="f-ingredients" placeholder="e.g.&#10;2 salmon fillets&#10;3 tbsp soy sauce&#10;2 tbsp mirin" style="min-height:90px"></textarea></div>
+    <div class="field"><label>Method / steps</label><textarea id="f-steps" placeholder="Write your step-by-step instructions here..." style="min-height:120px"></textarea></div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeRecipeModal()">Cancel</button>
       <button class="btn-primary" onclick="saveRecipe()">Save recipe</button>
@@ -769,7 +920,7 @@ function renderRecipes() {
       +'<div class="card-actions">'
       +'<button class="action-btn" onclick="editRecipeFn(\''+r.id+'\')">Edit</button>'
       +'<button class="action-btn del" onclick="deleteRecipeFn(\''+r.id+'\')">Delete</button>'
-      +'<button class="action-btn get-recipe" onclick="askRecipe(\''+esc(r.name)+'\')">Full recipe ↗</button>'
+      +'<button class="action-btn get-recipe" onclick="openRecipeViewer(\''+r.id+'\')">View recipe</button>'
       +'</div></div>'
       +(r.author ? '<div class="submitted-by">Added by '+esc(r.author)+'</div>' : '')
       +'</div>';
@@ -777,9 +928,321 @@ function renderRecipes() {
   applyFilter(currentFilter);
 }
 
-function askRecipe(name) {
-  window.open('https://claude.ai/new?q='+encodeURIComponent('Give me the full step-by-step recipe for '+name), '_blank');
+var FULL_RECIPES = {
+  'r1': {
+    ingredients: [
+      {amt:'2 fillets', name:'salmon, skin-on'},
+      {amt:'1.5 cups', name:'Japanese short-grain rice'},
+      {amt:'2', name:'large eggs'},
+      {amt:'100g', name:'frozen edamame, shelled'},
+      {amt:'1', name:'Japanese cucumber'},
+      {amt:'3 tbsp', name:'soy sauce'},
+      {amt:'2 tbsp', name:'mirin'},
+      {amt:'2 tbsp', name:'sake'},
+      {amt:'1 tbsp', name:'sugar'},
+      {amt:'2 tbsp', name:'rice vinegar'},
+      {amt:'½ tsp', name:'salt'},
+      {amt:'1 tbsp', name:'neutral oil'},
+      {amt:'1 tsp', name:'toasted sesame seeds'},
+      {amt:'2', name:'spring onions, sliced'}
+    ],
+    steps: [
+      {title:'Cook the rice', text:'Rinse rice under cold water until water runs clear. Cook according to packet instructions or in a rice cooker. Keep warm.'},
+      {title:'Soft-boil the eggs', text:'Bring a small pot to a rolling boil. Lower in eggs and cook for exactly 7 minutes. Transfer immediately to an ice bath, then peel and halve when ready to serve.', timer:'7 min'},
+      {title:'Pickle the cucumber', text:'Slice cucumber thinly (~3mm). Toss with rice vinegar and salt in a small bowl. Set aside for at least 10 minutes until lightly wilted and tangy.', timer:'10 min'},
+      {title:'Make the teriyaki sauce', text:'Combine soy sauce, mirin, sake and sugar in a small saucepan over medium heat. Simmer for 3–4 minutes until slightly thickened and glossy. Remove from heat.', timer:'4 min'},
+      {title:'Cook the edamame', text:'Cook edamame according to packet instructions (usually 3 minutes in boiling water). Drain and set aside.'},
+      {title:'Sear the salmon', text:'Pat salmon dry with paper towels — this is key for a crispy crust. Heat oil in a non-stick pan over medium-high. Place salmon skin-side down and press gently for 30 seconds. Sear 4 minutes until skin is crispy, then flip and cook 2 more minutes.', timer:'6 min'},
+      {title:'Glaze the salmon', text:'Reduce heat to medium-low. Pour teriyaki sauce over the salmon and spoon it over the fillets as it bubbles. Cook 1 minute until fish is glossy and well-coated.', timer:'1 min'},
+      {title:'Assemble', text:'Divide warm rice between two bowls. Place salmon fillet on top, then arrange pickled cucumber, edamame and soft-boiled egg alongside. Spoon any remaining sauce over the rice. Finish with spring onion and sesame seeds.'}
+    ],
+    notes: 'Pat the salmon very dry before searing — moisture is the enemy of a crispy skin. Pour any leftover pan sauce over the rice, not the salmon, to keep the skin crisp at the table.'
+  },
+  'r2': {
+    ingredients: [
+      {amt:'500g', name:'pork belly, cut into 2cm cubes'},
+      {amt:'4 tbsp', name:'soy sauce'},
+      {amt:'2 tbsp', name:'dark soy sauce'},
+      {amt:'2 tbsp', name:'Shaoxing rice wine'},
+      {amt:'1 tbsp', name:'sugar'},
+      {amt:'1 tsp', name:'five spice powder'},
+      {amt:'3', name:'star anise'},
+      {amt:'4 cloves', name:'garlic, smashed'},
+      {amt:'2 cups', name:'water'},
+      {amt:'4', name:'eggs'},
+      {amt:'2 cups', name:'Japanese short-grain rice, cooked'},
+      {amt:'to taste', name:'pickled mustard greens'}
+    ],
+    steps: [
+      {title:'Brown the pork', text:'Heat a splash of oil in a heavy pot or wok over medium-high heat. Add pork belly and cook until lightly browned on all sides, about 5 minutes. Remove and set aside.', timer:'5 min'},
+      {title:'Build the braise', text:'In the same pot, add sugar and let it caramelise to a light amber — about 1 minute. Add garlic and stir for 30 seconds. Return pork to the pot.'},
+      {title:'Add liquids and spices', text:'Add soy sauce, dark soy sauce, Shaoxing wine, five spice powder, star anise and water. Stir well. The liquid should just cover the pork.'},
+      {title:'Braise', text:'Bring to a boil, then reduce to a low simmer. Cover and cook for 60 minutes, stirring occasionally, until pork is very tender and sauce has thickened.', timer:'60 min'},
+      {title:'Braise the eggs', text:'After the first 20 minutes, add peeled soft-boiled eggs to the pot. Let them absorb the sauce colour for the remaining 40 minutes, turning occasionally.'},
+      {title:'Serve', text:'Spoon pork and sauce generously over steamed rice. Halve a braised egg and place alongside. Add pickled mustard greens to cut through the richness.'}
+    ],
+    notes: 'This dish deepens in flavour overnight — make extra and reheat the next day. The braising liquid also freezes well as a sauce base for other dishes.'
+  },
+  'r3': {
+    ingredients: [
+      {amt:'500g', name:'chicken thighs, boneless'},
+      {amt:'3 tbsp', name:'green curry paste (Mae Ploy)'},
+      {amt:'400ml', name:'coconut milk (1 can)'},
+      {amt:'200g', name:'Thai eggplant, quartered'},
+      {amt:'6', name:'kaffir lime leaves, torn'},
+      {amt:'2 tbsp', name:'fish sauce'},
+      {amt:'1 tsp', name:'sugar'},
+      {amt:'1 tbsp', name:'neutral oil'},
+      {amt:'1 handful', name:'Thai basil leaves'},
+      {amt:'2 cups', name:'jasmine rice, cooked'},
+      {amt:'1', name:'red chilli, sliced (garnish)'}
+    ],
+    steps: [
+      {title:'Fry the paste', text:'Heat oil in a wok or deep pan over medium heat. Add curry paste and fry for 2 minutes until fragrant and the oil separates from the paste.', timer:'2 min'},
+      {title:'Add coconut milk', text:'Pour in about half the coconut milk. Stir well to combine with the paste and bring to a simmer.'},
+      {title:'Cook the chicken', text:'Add chicken thighs (whole or sliced) to the pan. Simmer for 10 minutes until mostly cooked through, turning once.', timer:'10 min'},
+      {title:'Add vegetables', text:'Add Thai eggplant and kaffir lime leaves. Pour in remaining coconut milk. Season with fish sauce and sugar.'},
+      {title:'Simmer', text:'Cook for another 10 minutes until eggplant is tender and chicken is fully cooked. Taste and adjust fish sauce or sugar.', timer:'10 min'},
+      {title:'Finish and serve', text:'Remove from heat. Stir through Thai basil leaves — they will wilt in the residual heat. Serve over jasmine rice with sliced chilli on top.'}
+    ],
+    notes: 'Thai eggplant is sold at Mustafa or wet markets. If unavailable, use zucchini or regular eggplant cut into chunks. Mae Ploy paste is sold at FairPrice — it is noticeably spicier than Maesri, so use 2 tbsp if you prefer milder heat.'
+  },
+  'r4': {
+    ingredients: [
+      {amt:'1 whole', name:'sea bass or batang (~450g)'},
+      {amt:'40g', name:'fresh ginger, julienned'},
+      {amt:'4', name:'spring onions, julienned into 6cm strips'},
+      {amt:'4 sprigs', name:'fresh coriander'},
+      {amt:'3 tbsp', name:'light soy sauce'},
+      {amt:'1 tbsp', name:'Shaoxing wine'},
+      {amt:'½ tsp', name:'sugar'},
+      {amt:'3 tbsp', name:'neutral oil'},
+      {amt:'1 tsp', name:'sesame oil'},
+      {amt:'1 pinch', name:'white pepper'}
+    ],
+    steps: [
+      {title:'Prep the fish', text:'Score the fish with 3 diagonal cuts on each side down to the bone — this lets steam penetrate evenly. Rub with a little salt and white pepper inside and out. Stuff half the ginger into the cavity and lay the rest on top.'},
+      {title:'Set up your steamer', text:'Fill a wok with 5cm of water and bring to a rolling boil. Place the fish on a heatproof plate. Rest the plate on a metal rack or inverted bowl inside the wok so it sits above the water.'},
+      {title:'Steam the fish', text:'Once water is boiling hard, place the fish inside, cover tightly and steam for 8–10 minutes depending on thickness. The fish is done when flesh flakes easily at the thickest point and is opaque throughout.', timer:'9 min'},
+      {title:'Make the sauce', text:'While the fish steams, mix soy sauce, Shaoxing wine, sugar and sesame oil together in a small bowl until sugar dissolves.'},
+      {title:'Drain the plate', text:'Carefully remove the plate from the steamer. Tip away all the liquid that has pooled — this step is crucial as it can be bitter and will dilute your sauce.'},
+      {title:'Add toppings', text:'Lay julienned spring onion and coriander generously over the fish. Pour the soy sauce mixture evenly over everything.'},
+      {title:'The hot oil finish', text:'Heat neutral oil in a small saucepan over high heat until it just begins to smoke (~2 minutes). Pour it directly over the spring onions and coriander. It will sizzle and crackle loudly — this wilts the greens and blooms all the fragrance. Serve immediately.', timer:'2 min'}
+    ],
+    notes: 'Buy the fish the day you cook it — freshness is everything in this dish. Ask your wet market fishmonger to clean and score it for you. The oil must be smoking hot or the aromatics won\'t wilt properly.'
+  },
+  'r5': {
+    ingredients: [
+      {amt:'300g', name:'pork belly (for chashu)'},
+      {amt:'2 portions', name:'ramen noodles (fresh or dried)'},
+      {amt:'4 cups', name:'chicken or pork stock'},
+      {amt:'3 tbsp', name:'white miso paste'},
+      {amt:'1 tbsp', name:'soy sauce'},
+      {amt:'1 tsp', name:'sesame oil'},
+      {amt:'2 tsp', name:'mirin'},
+      {amt:'2', name:'soft-boiled eggs'},
+      {amt:'2 sheets', name:'nori'},
+      {amt:'2 stalks', name:'spring onion, sliced'},
+      {amt:'baby bok choy', name:'blanched, to serve'},
+      {amt:'to taste', name:'white pepper'}
+    ],
+    steps: [
+      {title:'Make chashu pork', text:'Roll pork belly tightly and tie with kitchen twine. Sear in a hot pan until browned all over. Transfer to a small pot, add soy sauce, mirin, sake and water to just cover. Simmer gently for 90 minutes until tender. Cool in the liquid, then slice.', timer:'90 min'},
+      {title:'Marinate the eggs', text:'Soft-boil eggs for 7 minutes, then peel and place in the cooled chashu braising liquid for at least 2 hours (overnight is best) until the whites are amber-coloured.', timer:'7 min'},
+      {title:'Make the miso broth', text:'Heat stock in a saucepan until just below boiling. In a ladle or small bowl, mix miso paste with a few spoonfuls of hot stock until smooth, then stir back into the pot. Add soy sauce, mirin and sesame oil. Do not boil after adding miso.'},
+      {title:'Cook the noodles', text:'Cook ramen noodles in a separate pot of boiling water according to packet instructions (usually 2–3 minutes for fresh, 4–5 for dried). Drain well.', timer:'3 min'},
+      {title:'Blanch the bok choy', text:'In the same noodle water, blanch bok choy for 90 seconds. Drain.', timer:'90 sec'},
+      {title:'Assemble the bowls', text:'Divide hot noodles between two deep bowls. Ladle the miso broth over generously. Arrange 2–3 slices of chashu, halved marinated egg, bok choy and nori on top. Finish with spring onion and white pepper.'}
+    ],
+    notes: 'The chashu and marinated eggs can both be made the day before — they keep for 3 days in the fridge and dramatically improve overnight. Never boil the broth after adding miso paste or it loses its flavour.'
+  },
+  'r6': {
+    ingredients: [
+      {amt:'400g', name:'minced pork'},
+      {amt:'1 large handful', name:'Thai holy basil leaves'},
+      {amt:'4 cloves', name:'garlic, minced'},
+      {amt:'4–6', name:'red and green chillies, sliced'},
+      {amt:'2 tbsp', name:'oyster sauce'},
+      {amt:'1 tbsp', name:'fish sauce'},
+      {amt:'1 tbsp', name:'soy sauce'},
+      {amt:'1 tsp', name:'sugar'},
+      {amt:'2 tbsp', name:'neutral oil'},
+      {amt:'2', name:'eggs (for frying)'},
+      {amt:'2 cups', name:'jasmine rice, cooked'}
+    ],
+    steps: [
+      {title:'Prep the sauce', text:'Mix oyster sauce, fish sauce, soy sauce and sugar together in a small bowl. Set aside.'},
+      {title:'Fry the aromatics', text:'Heat oil in a wok over very high heat until smoking. Add garlic and chillies and stir-fry for 30 seconds until fragrant. Do not let them burn.'},
+      {title:'Cook the pork', text:'Add minced pork and break it up quickly with a spatula. Stir-fry over high heat for 3–4 minutes until cooked through and slightly caramelised at the edges. Keep the heat high — you want a bit of char, not steaming.', timer:'4 min'},
+      {title:'Add the sauce', text:'Pour the sauce mixture over the pork and toss to coat. Cook for another 30 seconds until glossy and fragrant.'},
+      {title:'Add basil', text:'Remove from heat and immediately fold in the Thai basil leaves. The residual heat will wilt them perfectly. Do not add basil over direct heat or it turns dark and loses fragrance.'},
+      {title:'Fry the eggs', text:'In a separate pan, heat oil over high heat. When smoking, crack in the eggs. Fry until the edges are crispy and lacy but the yolk is still runny — about 90 seconds.', timer:'90 sec'},
+      {title:'Serve', text:'Plate rice in a shallow bowl, top with the pork, then crown with the crispy fried egg. Serve immediately.'}
+    ],
+    notes: 'Thai holy basil (bai krapao) is different from sweet or Italian basil — it has a slightly peppery, clove-like flavour and is essential to this dish. Find it at Mustafa or wet markets. The high heat is non-negotiable: a smoking hot wok is what gives this dish its characteristic breath of the wok (wok hei).'
+  },
+  'r7': {
+    ingredients: [
+      {amt:'500g', name:'beef shank, cut into large chunks'},
+      {amt:'4 tbsp', name:'soy sauce'},
+      {amt:'2 tbsp', name:'dark soy sauce'},
+      {amt:'2 tbsp', name:'Shaoxing wine'},
+      {amt:'1 tbsp', name:'doubanjiang (chilli bean paste)'},
+      {amt:'3', name:'star anise'},
+      {amt:'1 stick', name:'cinnamon'},
+      {amt:'4 cloves', name:'garlic'},
+      {amt:'1', name:'onion, quartered'},
+      {amt:'4 cups', name:'water or beef stock'},
+      {amt:'2 portions', name:'wide noodles or udon'},
+      {amt:'to serve', name:'bean sprouts, chilli oil, spring onion'}
+    ],
+    steps: [
+      {title:'Brown the beef', text:'Pat beef dry and season with salt. Sear in batches in a heavy pot over high heat until deep brown on all sides. Remove and set aside.', timer:'8 min'},
+      {title:'Fry the aromatics', text:'In the same pot, add a little oil. Fry onion, garlic and doubanjiang for 2 minutes until fragrant and the paste darkens slightly.'},
+      {title:'Build the broth', text:'Return beef to the pot. Add soy sauces, Shaoxing wine, star anise, cinnamon and stock or water. Bring to a boil.'},
+      {title:'Long braise', text:'Reduce to the lowest simmer, cover and cook for 90 minutes until beef is very tender and falling apart. Top up with water if needed to keep beef submerged.', timer:'90 min'},
+      {title:'Cook the noodles', text:'Cook noodles in boiling salted water according to packet instructions. Drain well.'},
+      {title:'Assemble', text:'Place noodles in deep bowls. Ladle over the broth and arrange beef chunks on top. Add bean sprouts, a drizzle of chilli oil and sliced spring onion.'}
+    ],
+    notes: 'Start this dish at least 2 hours before you plan to eat — the long braise is essential for the collagen in beef shank to melt into the broth and give it body. Like lu rou fan, it is even better the next day.'
+  },
+  'r8': {
+    ingredients: [
+      {amt:'4', name:'chicken thighs, bone-in'},
+      {amt:'2 links', name:'lap cheong (Chinese sausage), sliced'},
+      {amt:'6', name:'dried shiitake mushrooms, soaked'},
+      {amt:'1.5 cups', name:'jasmine rice, rinsed'},
+      {amt:'2 tbsp', name:'soy sauce'},
+      {amt:'1 tbsp', name:'dark soy sauce'},
+      {amt:'1 tbsp', name:'oyster sauce'},
+      {amt:'1 tbsp', name:'Shaoxing wine'},
+      {amt:'1 tsp', name:'sesame oil'},
+      {amt:'1 tsp', name:'sugar'},
+      {amt:'4 slices', name:'fresh ginger'},
+      {amt:'2 stalks', name:'spring onion, sliced'}
+    ],
+    steps: [
+      {title:'Soak the mushrooms', text:'Soak dried shiitake in warm water for 30 minutes until fully rehydrated. Squeeze out excess water, remove stems and halve. Reserve the soaking liquid.', timer:'30 min'},
+      {title:'Marinate the chicken', text:'Mix soy sauce, dark soy sauce, oyster sauce, Shaoxing wine, sesame oil and sugar. Coat chicken thighs and marinate for at least 20 minutes.', timer:'20 min'},
+      {title:'Cook the rice', text:'Place rinsed rice in the clay pot (or a heavy-based pot). Add the mushroom soaking liquid topped up with water to the usual rice water level. Bring to a boil, then reduce to low.'},
+      {title:'Add toppings', text:'Once the rice water has mostly absorbed (about 8 minutes), arrange the marinated chicken thighs, lap cheong, mushrooms and ginger slices on top of the rice. Pour remaining marinade over everything.', timer:'8 min'},
+      {title:'Steam finish', text:'Cover tightly and cook on the lowest heat for 20 minutes until chicken is cooked through and rice is fully done. Do not lift the lid during this time.', timer:'20 min'},
+      {title:'Serve', text:'Drizzle a little sesame oil over the top, scatter spring onions, and bring the clay pot to the table. The slightly charred rice crust at the bottom is the best part.'}
+    ],
+    notes: 'A clay pot gives the best results — the charred bottom crust (guoba) is prized. A heavy-based non-stick or cast iron pot works too. The mushroom soaking liquid adds depth to the rice, so use it all.'
+  },
+  'r9': {
+    ingredients: [
+      {amt:'400g', name:'prawns, shell-on'},
+      {amt:'3 stalks', name:'lemongrass, white part only, minced'},
+      {amt:'2 cloves', name:'garlic, minced'},
+      {amt:'1 tbsp', name:'fish sauce'},
+      {amt:'1 tsp', name:'sugar'},
+      {amt:'200g', name:'rice vermicelli (bee hoon)'},
+      {amt:'100g', name:'bean sprouts'},
+      {amt:'3', name:'limes'},
+      {amt:'2 tbsp', name:'fish sauce (nuoc cham)'},
+      {amt:'1 tbsp', name:'sugar (nuoc cham)'},
+      {amt:'1 red chilli', name:'sliced (nuoc cham)'},
+      {amt:'to serve', name:'coriander, mint, lettuce'}
+    ],
+    steps: [
+      {title:'Marinate the prawns', text:'Shell and devein prawns, leaving tails on. Mix with minced lemongrass, garlic, fish sauce and sugar. Marinate for 20 minutes.', timer:'20 min'},
+      {title:'Make nuoc cham', text:'Mix juice of 2 limes, fish sauce, sugar, sliced chilli and 2 tbsp warm water. Stir until sugar dissolves. Taste — it should be tangy, sweet, salty and a little spicy in equal measure.'},
+      {title:'Soak the noodles', text:'Soak rice vermicelli in warm water for 10 minutes until pliable. Drain, then blanch in boiling water for 1 minute. Drain and rinse with cold water.', timer:'10 min'},
+      {title:'Cook the prawns', text:'Heat a pan or grill over high heat. Cook prawns for 2 minutes per side until pink, slightly charred and cooked through. Do not overcrowd — cook in batches if needed.', timer:'4 min'},
+      {title:'Blanch the bean sprouts', text:'Quickly blanch bean sprouts in boiling water for 30 seconds. Drain.', timer:'30 sec'},
+      {title:'Assemble', text:'Place noodles in bowls. Top with bean sprouts, lemongrass prawns and fresh herbs. Serve nuoc cham on the side for dipping or pouring over as a dressing.'}
+    ],
+    notes: 'Thai holy basil and mint together are the key herb combination here. The nuoc cham is the heart of the dish — make it properly and taste as you go. Leftovers keep for 2 days in the fridge separately.'
+  },
+  'r10': {
+    ingredients: [
+      {amt:'300g', name:'thinly sliced beef (shabu-shabu cut)'},
+      {amt:'1 large', name:'yellow onion, thinly sliced'},
+      {amt:'2 cups', name:'dashi stock'},
+      {amt:'3 tbsp', name:'soy sauce'},
+      {amt:'2 tbsp', name:'mirin'},
+      {amt:'1 tbsp', name:'sake'},
+      {amt:'1 tbsp', name:'sugar'},
+      {amt:'2', name:'eggs'},
+      {amt:'2 cups', name:'Japanese short-grain rice, cooked'},
+      {amt:'2 stalks', name:'spring onion, sliced'},
+      {amt:'to serve', name:'beni shoga (pickled ginger)'}
+    ],
+    steps: [
+      {title:'Make the broth', text:'Combine dashi stock, soy sauce, mirin, sake and sugar in a wide pan or skillet. Bring to a gentle simmer over medium heat.'},
+      {title:'Cook the onion', text:'Add sliced onion to the simmering broth. Cook for 8–10 minutes until very soft and translucent, stirring occasionally.', timer:'9 min'},
+      {title:'Add the beef', text:'Lay the thinly sliced beef over the onion in a single layer. Do not stir — let it cook undisturbed for 2 minutes until just cooked through. The beef should be tender and have absorbed the broth.', timer:'2 min'},
+      {title:'Add the egg', text:'Beat eggs lightly — you want streaks, not a fully uniform mix. Pour the egg mixture over the beef in a thin stream. Cover and cook for 60–90 seconds until egg is just set but still slightly runny in the centre.', timer:'75 sec'},
+      {title:'Serve immediately', text:'Slide the beef and egg directly over a bowl of hot rice, making sure to include plenty of the sweet-savoury broth. Top with spring onion and beni shoga.'}
+    ],
+    notes: 'The egg should be just barely set — Japanese-style donburi always has a silky, almost custardy egg rather than a fully cooked one. The moment it looks 80% set, take it off the heat. It will continue cooking from residual heat. Shabu-shabu cut beef is available at Don Don Donki in Singapore.'
+  }
+};
+
+function openRecipeViewer(id) {
+  var recipes = getRecipes();
+  var r = recipes.find(function(x){ return x.id===id; });
+  if(!r) return;
+
+  document.getElementById('rv-cuisine').textContent = CUISINE_LABEL[r.cuisine] || r.cuisine;
+  document.getElementById('rv-title').textContent = r.name;
+  document.getElementById('rv-meta').innerHTML =
+    '<span class="rv-chip">'+r.time+' min</span>'
+    +'<span class="rv-chip">&nbsp;·&nbsp; '+esc(r.serves||'2')+' servings</span>'
+    +'<span class="rv-chip">&nbsp;·&nbsp; '+DIFF_LABEL[r.diff]+'</span>';
+
+  var full = FULL_RECIPES[id];
+  var body = '';
+
+  if(full) {
+    body += '<p class="rv-section-label">Ingredients</p>';
+    body += '<div class="rv-ingredients">';
+    full.ingredients.forEach(function(ing){
+      body += '<div class="rv-ing"><span class="rv-ing-amt">'+esc(ing.amt)+'</span><span>'+esc(ing.name)+'</span></div>';
+    });
+    body += '</div>';
+
+    body += '<p class="rv-section-label">Method</p>';
+    body += '<div class="rv-steps">';
+    full.steps.forEach(function(step, i){
+      body += '<div class="rv-step">'
+        +'<div class="rv-step-num">'+(i+1)+'</div>'
+        +'<div class="rv-step-body">'
+        +'<div class="rv-step-title">'+esc(step.title)+'</div>'
+        +'<div class="rv-step-text">'+esc(step.text)+'</div>'
+        +(step.timer ? '<div class="rv-timer">'+esc(step.timer)+'</div>' : '')
+        +'</div></div>';
+    });
+    body += '</div>';
+
+    if(full.notes) {
+      body += '<div class="rv-notes"><div class="rv-notes-label">Notes</div>'+esc(full.notes)+'</div>';
+    }
+  } else if(r.steps && r.steps.trim()) {
+    body += '<p class="rv-section-label">Method</p>';
+    body += '<div class="rv-user-steps">'+esc(r.steps)+'</div>';
+    if(r.ingredients && r.ingredients.trim()) {
+      body = '<p class="rv-section-label">Ingredients</p><div class="rv-user-steps" style="margin-bottom:1.25rem">'+esc(r.ingredients)+'</div>' + body;
+    }
+  } else {
+    body += '<p class="rv-no-steps">No recipe steps added yet. Edit this recipe to add ingredients and method.</p>';
+  }
+
+  document.getElementById('rv-body').innerHTML = body;
+  document.getElementById('rv-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+
+function closeRecipeViewer() {
+  document.getElementById('rv-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('rv-backdrop').addEventListener('click', function(e){
+  if(e.target === this) closeRecipeViewer();
+});
 
 function updateHeroStats(recipes) {
   document.getElementById('stat-total').textContent = recipes.length;
@@ -818,6 +1281,8 @@ function openAddRecipe() {
   document.getElementById('f-diff').value='easy';
   document.getElementById('f-serves').value='2';
   document.getElementById('f-author').value='';
+  document.getElementById('f-ingredients').value='';
+  document.getElementById('f-steps').value='';
   document.getElementById('recipe-modal').classList.add('open');
   setTimeout(function(){ document.getElementById('f-name').focus(); }, 100);
 }
@@ -834,6 +1299,8 @@ function editRecipeFn(id) {
   document.getElementById('f-diff').value = r.diff;
   document.getElementById('f-serves').value = r.serves||'2';
   document.getElementById('f-author').value = r.author||'';
+  document.getElementById('f-ingredients').value = r.ingredients||'';
+  document.getElementById('f-steps').value = r.steps||'';
   document.getElementById('recipe-modal').classList.add('open');
 }
 
@@ -851,7 +1318,9 @@ function saveRecipe() {
     time: parseInt(document.getElementById('f-time').value)||30,
     diff: document.getElementById('f-diff').value,
     serves: document.getElementById('f-serves').value.trim()||'2',
-    author: document.getElementById('f-author').value.trim()||'Anonymous'
+    author: document.getElementById('f-author').value.trim()||'Anonymous',
+    ingredients: document.getElementById('f-ingredients').value.trim(),
+    steps: document.getElementById('f-steps').value.trim()
   };
   if(editRecipeId) {
     var idx = recipes.findIndex(function(r){ return r.id===editRecipeId; });
@@ -909,13 +1378,15 @@ function updatePantryStats(pantry) {
 }
 
 function cycleStatus(btn, id) {
-  var cur = STATUS_CYCLE.indexOf(btn.className.replace('status-btn ','').replace('s-',''));
-  var next = STATUS_CYCLE[(cur+1)%3];
-  btn.textContent = STATUS_LABEL[next];
-  btn.className = 'status-btn '+STATUS_CLASS[next];
   var pantry = getPantry();
   var item = pantry.find(function(p){ return p.id===id; });
-  if(item) item.status = next;
+  if(!item) return;
+  var cur = STATUS_CYCLE.indexOf(item.status);
+  if(cur === -1) cur = 0;
+  var next = STATUS_CYCLE[(cur+1)%3];
+  item.status = next;
+  btn.textContent = STATUS_LABEL[next];
+  btn.className = 'status-btn '+STATUS_CLASS[next];
   setPantry(pantry);
   updatePantryStats(pantry);
   if(shopVisible) buildShopList(pantry);
@@ -926,6 +1397,7 @@ function toggleShopList() {
   var box = document.getElementById('shoplist');
   box.classList.toggle('visible', shopVisible);
   if(shopVisible) buildShopList(getPantry());
+  else box.classList.remove('visible');
 }
 
 function buildShopList(pantry) {
