@@ -642,6 +642,50 @@ function setImportStatus(msg, type) {
   el.className = 'import-status ' + type;
 }
 
+async function fetchWithTimeout(url, ms) {
+  var controller = new AbortController();
+  var timer = setTimeout(function(){ controller.abort(); }, ms);
+  try {
+    var res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    return res;
+  } catch(e) {
+    clearTimeout(timer);
+    throw e;
+  }
+}
+
+async function fetchViaProxy(targetUrl) {
+  var proxies = [
+    function(u){ return 'https://api.allorigins.win/get?url=' + encodeURIComponent(u); },
+    function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+    function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
+  ];
+
+  var lastErr = null;
+  for (var i = 0; i < proxies.length; i++) {
+    var proxyUrl = proxies[i](targetUrl);
+    setImportStatus('Trying to fetch page' + (i > 0 ? ' (attempt ' + (i+1) + ')' : '') + '…', 'loading');
+    try {
+      var res = await fetchWithTimeout(proxyUrl, 10000);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var ct = res.headers.get('content-type') || '';
+      var html;
+      if (ct.includes('json')) {
+        var json = await res.json();
+        html = json.contents || json.body || json.data || '';
+      } else {
+        html = await res.text();
+      }
+      if (!html || html.length < 200) throw new Error('Empty response');
+      return html;
+    } catch(e) {
+      lastErr = e;
+    }
+  }
+  throw new Error('All proxies failed. The site may be blocking scrapers. Try copying the recipe manually.');
+}
+
 async function importFromUrl() {
   var url = document.getElementById('f-url').value.trim();
   if (!url) { document.getElementById('f-url').focus(); return; }
@@ -650,18 +694,14 @@ async function importFromUrl() {
   var btn = document.getElementById('btn-import');
   btn.disabled = true;
   btn.textContent = 'Importing…';
-  setImportStatus('Fetching recipe data…', 'loading');
+  setImportStatus('Starting import…', 'loading');
 
   try {
-    var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-    var res = await fetch(proxyUrl);
-    if (!res.ok) throw new Error('Could not fetch the page (status ' + res.status + ')');
-    var data = await res.json();
-    var html = data.contents;
-    if (!html) throw new Error('No content returned from the URL');
+    var html = await fetchViaProxy(url);
+    setImportStatus('Parsing recipe data…', 'loading');
 
     var parsed = parseRecipeFromHtml(html, url);
-    if (!parsed) throw new Error('No recipe data found on this page. Try a different recipe site.');
+    if (!parsed) throw new Error('No structured recipe data found on this page. The site may not support auto-import — fill in manually instead.');
 
     if (parsed.name) document.getElementById('f-name').value = parsed.name;
     if (parsed.desc) document.getElementById('f-desc').value = parsed.desc;
@@ -675,7 +715,11 @@ async function importFromUrl() {
     try { domain = new URL(url).hostname.replace('www.',''); } catch(e){}
     document.getElementById('f-author').value = (parsed.author ? parsed.author + ' · ' : '') + domain + ' — ' + url;
 
-    setImportStatus('Recipe imported! Review the fields below and adjust if needed.', 'success');
+    var fieldsFound = [parsed.name, parsed.ingredients, parsed.steps].filter(Boolean).length;
+    setImportStatus(
+      'Imported ' + (fieldsFound === 3 ? 'successfully' : 'partially') + '! Review and adjust the fields below before saving.',
+      'success'
+    );
   } catch(e) {
     setImportStatus('Import failed: ' + e.message, 'error');
   }
