@@ -161,6 +161,21 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
 
+.import-bar { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+.import-bar input { flex: 1; font-size: 13px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border2); background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .15s; }
+.import-bar input:focus { border-color: var(--accent); }
+.import-bar input::placeholder { color: var(--ink3); }
+.btn-import { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 9px 16px; border-radius: 8px; border: none; background: var(--ink); color: var(--cream); cursor: pointer; white-space: nowrap; transition: all .15s; flex-shrink: 0; }
+.btn-import:hover { background: var(--ink2); }
+.btn-import:disabled { opacity: .5; cursor: not-allowed; }
+.import-status { font-size: 12px; margin-bottom: 1rem; padding: 8px 12px; border-radius: 8px; display: none; }
+.import-status.loading { display: block; background: var(--surface2); color: var(--ink3); }
+.import-status.success { display: block; background: #edf5ee; color: #1a5c28; }
+.import-status.error { display: block; background: #fdeee8; color: #7a2010; }
+.import-divider { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+.import-divider-line { flex: 1; height: 1px; background: var(--border); }
+.import-divider-text { font-size: 11px; color: var(--ink3); white-space: nowrap; }
+
 .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--ink); color: var(--cream); font-size: 13px; padding: 10px 18px; border-radius: 8px; z-index: 300; opacity: 0; transform: translateY(8px); transition: all .25s ease; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateY(0); }
 
@@ -284,7 +299,7 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
       <ul>
         <li><strong>Recipes tab</strong> — browse, filter by cuisine or cook time, and view the full step-by-step recipe for any dish.</li>
         <li><strong>Pantry tab</strong> — track your staple ingredients. Tap a status badge to mark items as Low or Out. Hit "Top-up list" to see your shopping list at a glance.</li>
-        <li><strong>(WIP) Add anything</strong> — the collection is open to the whole kampung. Add your family's recipes and they'll appear for everyone.</li>
+        <li><strong>Add anything</strong> — the collection is open to the whole kampung. Add your family's recipes and they'll appear for everyone.</li>
       </ul>
       <hr class="divider">
       <h2>The cuisines</h2>
@@ -358,6 +373,20 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
 <div class="modal-backdrop" id="recipe-modal">
   <div class="modal">
     <p class="modal-title" id="recipe-modal-title">Add a recipe</p>
+
+    <div id="import-section">
+      <div class="import-bar">
+        <input id="f-url" type="url" placeholder="Paste a recipe URL to auto-fill… e.g. justonecookbook.com/…">
+        <button class="btn-import" id="btn-import" onclick="importFromUrl()">Import</button>
+      </div>
+      <div class="import-status" id="import-status"></div>
+      <div class="import-divider">
+        <div class="import-divider-line"></div>
+        <span class="import-divider-text">or fill in manually</span>
+        <div class="import-divider-line"></div>
+      </div>
+    </div>
+
     <div class="field"><label>Dish name *</label><input id="f-name" placeholder="e.g. Miso ramen with chashu pork"></div>
     <div class="field"><label>Short description</label><textarea id="f-desc" placeholder="A sentence or two about the dish..."></textarea></div>
     <div class="field-row">
@@ -372,7 +401,7 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
       </div>
       <div class="field"><label>Servings</label><input id="f-serves" placeholder="e.g. 2"></div>
     </div>
-    <div class="field"><label>Author</label><input id="f-author" placeholder="e.g. Jitto"></div>
+    <div class="field"><label>Source / author</label><input id="f-author" placeholder="e.g. Jitto, or auto-filled from URL"></div>
     <div class="field"><label>Ingredients (one per line)</label><textarea id="f-ingredients" placeholder="2 salmon fillets&#10;3 tbsp soy sauce" style="min-height:90px"></textarea></div>
     <div class="field"><label>Method / steps</label><textarea id="f-steps" placeholder="Step-by-step instructions..." style="min-height:120px"></textarea></div>
     <div class="modal-footer">
@@ -416,6 +445,7 @@ header { background: var(--ink); padding: 0 2rem; display: flex; align-items: ce
 <script>
 var SUPABASE_URL = 'https://wlcmhndnhhhvsulsxmkc.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndsY21obmRuaGhodnN1bHN4bWtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MDE2OTIsImV4cCI6MjA5MjA3NzY5Mn0.x1IoKQmtewVmnSUvwJERXX3eMAEMPz84F3DKhqTXyf0';
+var WORKER_URL = 'https://kkb-import.jitnungers.workers.dev';
 var ADMIN_SECRET = 'kkbsecret';
 var isAdmin = (new URLSearchParams(window.location.search)).get('admin') === ADMIN_SECRET;
 
@@ -607,15 +637,84 @@ function closeRecipeViewer() {
   document.body.style.overflow='';
 }
 
+function setImportStatus(msg, type) {
+  var el = document.getElementById('import-status');
+  el.textContent = msg;
+  el.className = 'import-status ' + type;
+}
+
+async function importFromUrl() {
+  var url = document.getElementById('f-url').value.trim();
+  if (!url) { document.getElementById('f-url').focus(); return; }
+  if (!url.startsWith('http')) url = 'https://' + url;
+
+  var btn = document.getElementById('btn-import');
+  btn.disabled = true;
+  btn.textContent = 'Importing…';
+  setImportStatus('Asking Claude to read the recipe… (~15 seconds)', 'loading');
+
+  var controller = new AbortController();
+  var timer = setTimeout(function(){ controller.abort(); }, 90000);
+
+  try {
+    var response = await fetch(WORKER_URL, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url })
+    });
+
+    clearTimeout(timer);
+
+    var data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Worker error ' + response.status);
+    }
+
+    var recipe = data;
+    if (!recipe.name) throw new Error('Recipe name missing. The page may not contain a recipe.');
+
+    if (recipe.name)        document.getElementById('f-name').value        = recipe.name;
+    if (recipe.desc)        document.getElementById('f-desc').value        = recipe.desc;
+    if (recipe.time)        document.getElementById('f-time').value        = recipe.time;
+    if (recipe.serves)      document.getElementById('f-serves').value      = recipe.serves;
+    if (recipe.ingredients) document.getElementById('f-ingredients').value = recipe.ingredients;
+    if (recipe.steps)       document.getElementById('f-steps').value       = recipe.steps;
+    if (recipe.cuisine && CUISINE_LABEL[recipe.cuisine]) document.getElementById('f-cuisine').value = recipe.cuisine;
+
+    var domain = '';
+    try { domain = new URL(url).hostname.replace('www.',''); } catch(e){}
+    document.getElementById('f-author').value = (recipe.author ? recipe.author + ' · ' + domain : domain) + ' — ' + url;
+
+    setImportStatus('Imported! Review and adjust the fields below before saving.', 'success');
+
+  } catch(e) {
+    clearTimeout(timer);
+    var msg = e.name === 'AbortError'
+      ? 'Timed out. Check your connection and try again.'
+      : e.message;
+    setImportStatus('Import failed: ' + msg, 'error');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Import';
+}
+
 function openAddRecipe() {
   if(!isAdmin) return;
   editRecipeId=null;
   document.getElementById('recipe-modal-title').textContent='Add a recipe';
-  ['f-name','f-desc','f-time','f-serves','f-author','f-ingredients','f-steps'].forEach(function(id){ document.getElementById(id).value=''; });
+  ['f-name','f-desc','f-time','f-serves','f-author','f-ingredients','f-steps','f-url'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('f-cuisine').value='jp';
   document.getElementById('f-diff').value='easy';
+  document.getElementById('import-section').style.display='block';
+  document.getElementById('import-status').className='import-status';
+  document.getElementById('import-status').textContent='';
+  document.getElementById('btn-import').disabled=false;
+  document.getElementById('btn-import').textContent='Import';
   document.getElementById('recipe-modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('f-name').focus(); },100);
+  setTimeout(function(){ document.getElementById('f-url').focus(); },100);
 }
 
 function editRecipeFn(id) {
@@ -633,6 +732,7 @@ function editRecipeFn(id) {
   document.getElementById('f-author').value=r.author||'';
   document.getElementById('f-ingredients').value=r.ingredients||'';
   document.getElementById('f-steps').value=r.steps||'';
+  document.getElementById('import-section').style.display='none';
   document.getElementById('recipe-modal').classList.add('open');
 }
 
